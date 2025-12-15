@@ -312,8 +312,21 @@ export default function Home() {
             isTablet && styles.testimonialsSectionTablet,
             isDesktop && styles.testimonialsSectionDesktop
           ]}>
-            {/* Background Pattern */}
+            {/* AI-Themed Background Pattern */}
             <View style={styles.testimonialsPattern} />
+            <View style={styles.aiFeatureContainer}>
+              {/* Gradient Background */}
+              <View style={styles.aiGradientBase} />
+              {/* Geometric Shapes - AI Theme */}
+              <View style={styles.aiShape1} />
+              <View style={styles.aiShape2} />
+              <View style={styles.aiShape3} />
+              <View style={styles.aiShape4} />
+              {/* Connecting Lines - Neural Network Style */}
+              <View style={styles.aiAccentLine1} />
+              <View style={styles.aiAccentLine2} />
+              <View style={styles.aiAccentLine3} />
+            </View>
             
             <Container style={{ position: 'relative', zIndex: 10 }}>
               <View style={{ alignItems: 'center', marginBottom: 64 }}>
@@ -852,13 +865,16 @@ const styles = StyleSheet.create({
   // Practice Areas
   practiceSection: {
     paddingVertical: 64, // Mobile-first: 64px
+    paddingTop: 80, // Extra top padding to prevent overlap
     backgroundColor: 'white',
   },
   practiceSectionTablet: {
     paddingVertical: 96,
+    paddingTop: 112, // Extra top padding for tablet
   },
   practiceSectionDesktop: {
     paddingVertical: 120,
+    paddingTop: 140, // Extra top padding for desktop
   },
   practiceHeader: {
     flexDirection: 'row',
@@ -949,12 +965,117 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    opacity: 0.05,
-    backgroundColor: '#e2e8f0', // slate-200 - subtle pattern color
+    backgroundColor: '#f8fafc', // Base color
     zIndex: 0,
-    // Subtle diagonal pattern effect
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(148, 163, 184, 0.1)', // slate-400 with low opacity
+  },
+  aiFeatureContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1,
+    overflow: 'hidden',
+  },
+  aiGradientBase: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(37, 99, 235, 0.02)',
+  },
+  aiShape1: {
+    position: 'absolute',
+    top: '12%',
+    right: '8%',
+    width: 140,
+    height: 140,
+    borderRadius: 24,
+    backgroundColor: 'rgba(37, 99, 235, 0.06)',
+    transform: [{ rotate: '45deg' }],
+    borderWidth: 2.5,
+    borderColor: 'rgba(37, 99, 235, 0.2)',
+    shadowColor: '#2563eb',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  aiShape2: {
+    position: 'absolute',
+    bottom: '18%',
+    left: '6%',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: 'rgba(96, 165, 250, 0.08)',
+    borderWidth: 2.5,
+    borderColor: 'rgba(96, 165, 250, 0.25)',
+    shadowColor: '#60a5fa',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  aiShape3: {
+    position: 'absolute',
+    top: '48%',
+    right: '22%',
+    width: 70,
+    height: 70,
+    borderRadius: 16,
+    backgroundColor: 'rgba(59, 130, 246, 0.07)',
+    transform: [{ rotate: '-30deg' }],
+    borderWidth: 2,
+    borderColor: 'rgba(59, 130, 246, 0.22)',
+    shadowColor: '#3b82f6',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 1,
+  },
+  aiShape4: {
+    position: 'absolute',
+    top: '65%',
+    left: '15%',
+    width: 50,
+    height: 50,
+    borderRadius: 8,
+    backgroundColor: 'rgba(37, 99, 235, 0.05)',
+    transform: [{ rotate: '20deg' }],
+    borderWidth: 1.5,
+    borderColor: 'rgba(37, 99, 235, 0.18)',
+  },
+  aiAccentLine1: {
+    position: 'absolute',
+    top: '22%',
+    left: '5%',
+    width: '35%',
+    height: 2.5,
+    backgroundColor: 'rgba(37, 99, 235, 0.15)',
+    transform: [{ rotate: '-8deg' }],
+    borderRadius: 2,
+  },
+  aiAccentLine2: {
+    position: 'absolute',
+    bottom: '28%',
+    left: '35%',
+    width: '40%',
+    height: 2.5,
+    backgroundColor: 'rgba(96, 165, 250, 0.12)',
+    transform: [{ rotate: '10deg' }],
+    borderRadius: 2,
+  },
+  aiAccentLine3: {
+    position: 'absolute',
+    top: '55%',
+    right: '12%',
+    width: '25%',
+    height: 2,
+    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+    transform: [{ rotate: '-15deg' }],
+    borderRadius: 2,
   },
   titleUnderline: {
     width: 96,

@@ -67,9 +67,14 @@ export function Footer() {
         </View>
 
         <View style={[styles.footerBottom, isDesktop && styles.footerBottomDesktop]}>
-          <Text style={styles.copyright}>
-            © {currentYear} {COMPANY_INFO.name}. All rights reserved.
-          </Text>
+          <View style={styles.copyrightContainer}>
+            <Text style={styles.copyright}>
+              © {currentYear} {COMPANY_INFO.name}. All rights reserved.
+            </Text>
+            <Text style={styles.copyrightSubtext}>
+              Founded by David Rodriguez, Founding Attorney
+            </Text>
+          </View>
           <View style={styles.legalLinks}>
             <TouchableOpacity><Text style={styles.legalLink}>Privacy Policy</Text></TouchableOpacity>
             <TouchableOpacity><Text style={styles.legalLink}>Terms of Service</Text></TouchableOpacity>
@@ -168,9 +173,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  copyrightContainer: {
+    flexDirection: 'column',
+    gap: 4,
+  },
   copyright: {
     fontSize: 14,
+    color: '#94a3b8',
+    fontWeight: '600',
+  },
+  copyrightSubtext: {
+    fontSize: 12,
     color: '#64748b',
+    fontStyle: 'italic',
   },
   legalLinks: {
     flexDirection: 'row',
