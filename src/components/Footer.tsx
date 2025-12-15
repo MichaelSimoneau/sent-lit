@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import { Container } from './Container';
+import { Logo } from './Logo';
 import { COMPANY_INFO, PRACTICE_AREAS, NAVIGATION } from '../constants/content';
 
 export function Footer() {
@@ -14,17 +15,17 @@ export function Footer() {
           
           {/* Brand & Contact */}
           <View className="flex-1">
-            <Text className="text-2xl font-serif font-bold text-white mb-6">
-              SENTINEL <Text className="text-primary">LITIGATION</Text>
-            </Text>
-            <Text className="text-lg mb-6 leading-relaxed max-w-sm">
+            <View className="mb-6">
+              <Logo color="white" accent="#2563eb" width={250} height={50} variant="full" />
+            </View>
+            <Text className="text-lg mb-6 leading-relaxed max-w-sm text-slate-400">
               Dedicated to protecting consumers from fraud, deception, and unfair practices.
             </Text>
             <View className="space-y-2">
               <Text className="text-white font-bold text-xl">{COMPANY_INFO.phone}</Text>
-              <Text>{COMPANY_INFO.address.street}, {COMPANY_INFO.address.suite}</Text>
-              <Text>{COMPANY_INFO.address.city}, {COMPANY_INFO.address.state} {COMPANY_INFO.address.zip}</Text>
-              <Text className="mt-2">{COMPANY_INFO.email}</Text>
+              <Text className="text-slate-400">{COMPANY_INFO.address.street}, {COMPANY_INFO.address.suite}</Text>
+              <Text className="text-slate-400">{COMPANY_INFO.address.city}, {COMPANY_INFO.address.state} {COMPANY_INFO.address.zip}</Text>
+              <Text className="mt-2 text-slate-400">{COMPANY_INFO.email}</Text>
             </View>
           </View>
 
@@ -35,13 +36,13 @@ export function Footer() {
               {NAVIGATION.map(item => (
                 <Link key={item.title} href={item.href as any} asChild>
                   <TouchableOpacity>
-                    <Text className="hover:text-primary transition-colors">{item.title}</Text>
+                    <Text className="text-slate-400 hover:text-primary transition-colors">{item.title}</Text>
                   </TouchableOpacity>
                 </Link>
               ))}
-              <Link href="/portal" asChild>
+              <Link href="/resources/pay-online" asChild>
                 <TouchableOpacity>
-                  <Text className="hover:text-primary transition-colors">Client Portal</Text>
+                  <Text className="text-slate-400 hover:text-primary transition-colors">Pay Online</Text>
                 </TouchableOpacity>
               </Link>
             </View>
@@ -55,16 +56,7 @@ export function Footer() {
                 {PRACTICE_AREAS.slice(0, 6).map(area => (
                   <Link key={area.id} href={`/practice-areas/${area.slug}` as any} asChild>
                     <TouchableOpacity>
-                      <Text className="hover:text-primary transition-colors text-sm">{area.title}</Text>
-                    </TouchableOpacity>
-                  </Link>
-                ))}
-              </View>
-              <View className="space-y-3">
-                {PRACTICE_AREAS.slice(6).map(area => (
-                  <Link key={area.id} href={`/practice-areas/${area.slug}` as any} asChild>
-                    <TouchableOpacity>
-                      <Text className="hover:text-primary transition-colors text-sm">{area.title}</Text>
+                      <Text className="text-slate-400 hover:text-primary transition-colors text-sm">{area.title}</Text>
                     </TouchableOpacity>
                   </Link>
                 ))}
@@ -75,13 +67,13 @@ export function Footer() {
         </View>
 
         <View className="border-t border-slate-800 pt-8 flex-col lg:flex-row justify-between items-center gap-4">
-          <Text className="text-sm">
+          <Text className="text-sm text-slate-500">
             © {currentYear} {COMPANY_INFO.name}. All rights reserved.
           </Text>
           <View className="flex-row gap-6">
-            <TouchableOpacity><Text className="text-sm hover:text-white">Privacy Policy</Text></TouchableOpacity>
-            <TouchableOpacity><Text className="text-sm hover:text-white">Terms of Service</Text></TouchableOpacity>
-            <TouchableOpacity><Text className="text-sm hover:text-white">Disclaimer</Text></TouchableOpacity>
+            <TouchableOpacity><Text className="text-sm text-slate-500 hover:text-white">Privacy Policy</Text></TouchableOpacity>
+            <TouchableOpacity><Text className="text-sm text-slate-500 hover:text-white">Terms of Service</Text></TouchableOpacity>
+            <TouchableOpacity><Text className="text-sm text-slate-500 hover:text-white">Disclaimer</Text></TouchableOpacity>
           </View>
         </View>
         

@@ -4,6 +4,7 @@ import { Link } from 'expo-router';
 import { Container } from './Container';
 import { NAVIGATION, COMPANY_INFO } from '../constants/content';
 import { AISearch } from './AISearch';
+import { Logo } from './Logo';
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,9 +28,9 @@ export function Navigation() {
   };
 
   return (
-    <View className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50 shadow-sm">
+    <View className="bg-white/95 backdrop-blur-md dark:bg-slate-900/95 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50 shadow-md">
       {/* Top Bar - Phone */}
-      <View className="bg-slate-50 dark:bg-slate-950 py-1 border-b border-slate-100 dark:border-slate-800">
+      <View className="bg-slate-50 dark:bg-slate-950 py-1.5 border-b border-slate-100 dark:border-slate-800">
         <Container>
           <View className="flex-row justify-end items-center">
             <Text className="text-slate-500 text-xs mr-2">Call Us Today!</Text>
@@ -43,10 +44,7 @@ export function Navigation() {
           {/* Logo */}
           <Link href="/" asChild>
             <TouchableOpacity className="flex-1">
-              <Text className="text-2xl font-serif font-bold text-slate-900 dark:text-white tracking-tight">
-                SENTINEL
-                <Text className="text-primary"> LITIGATION</Text>
-              </Text>
+              <Logo width={280} height={60} variant="wordmark" />
             </TouchableOpacity>
           </Link>
 

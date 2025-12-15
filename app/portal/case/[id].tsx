@@ -34,16 +34,23 @@ export default function CaseDetail() {
               </View>
 
               {/* AI Summary Banner */}
-              <View className="bg-white dark:bg-slate-800 p-6 rounded-xl border border-primary/20 mb-8 shadow-sm">
-                <View className="flex-row items-center mb-2">
-                  <Text className="text-xs font-bold text-primary uppercase tracking-wider mr-2">AI Daily Summary</Text>
-                  <View className="h-px flex-1 bg-slate-100 dark:bg-slate-700" />
+              <View className="bg-white dark:bg-slate-800 p-8 rounded-xl border border-slate-200 dark:border-slate-700 mb-8 shadow-sm relative overflow-hidden">
+                {/* Legal Pad Top Border */}
+                <View className="absolute top-0 left-0 right-0 h-4 bg-yellow-100 flex-row items-end justify-between px-2 border-b border-yellow-200/50">
+                   <View className="w-full h-[1px] bg-yellow-300" />
                 </View>
-                <Text className="text-slate-700 dark:text-slate-300 text-lg">
-                  "No new filings today. The next deadline is "
-                  <Text className="font-bold">November 15</Text>
-                  " for the initial status hearing. We are currently waiting for the opposing counsel to respond to our settlement demand."
-                </Text>
+                {/* Red Margin Line */}
+                <View className="absolute top-0 bottom-0 left-12 w-[1px] bg-red-200/50 z-0" />
+
+                <View className="relative z-10 pl-8">
+                  <View className="flex-row items-center mb-4">
+                    <View className="w-2 h-2 rounded-full bg-primary mr-2 animate-pulse" />
+                    <Text className="text-xs font-bold text-primary uppercase tracking-wider">AI Daily Brief</Text>
+                  </View>
+                  <Text className="text-slate-700 dark:text-slate-300 text-lg font-serif leading-relaxed italic">
+                    "No new filings today. The next deadline is <Text className="font-bold not-italic text-slate-900 dark:text-white">November 15</Text> for the initial status hearing. We are currently waiting for the opposing counsel to respond to our settlement demand."
+                  </Text>
+                </View>
               </View>
 
               {/* Tabs */}

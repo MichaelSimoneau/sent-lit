@@ -3,8 +3,8 @@ import { View } from 'react-native';
 import Svg, { Path, G, Rect, Text as SvgText } from 'react-native-svg';
 
 interface LogoProps {
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
   color?: string;
   accent?: string;
   variant?: 'full' | 'icon' | 'wordmark';
@@ -26,7 +26,7 @@ export const Logo = ({
   const viewBox = isIcon ? "0 0 100 100" : isWordmark ? "0 0 250 50" : "0 0 350 100";
   
   return (
-    <View className={className} style={{ width, height }}>
+    <View className={className} style={{ width: width as any, height: height as any }}>
       <Svg width="100%" height="100%" viewBox={viewBox}>
         {/* Icon Part */}
         {!isWordmark && (
