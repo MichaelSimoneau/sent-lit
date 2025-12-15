@@ -1,2 +1,2 @@
-# sent-lit
-Sentinel Litigation
+# Sentinel Litigation
+> The firm is called Sentinel Litigation and I am the founding attorney.  You can find a bio of me on DePaul Law's website, which I think is still up.  Competition is broad as I handle everything except criminal matters in both state and federal court but I specialize in cases where a person, family, or entity have been defrauded or are the victims of consumer fraud, which is rampant, especially in the wake of the Supreme Court's decision upholding arbitration clauses in consumer contracts and also upholding clauses that prohibit coming together as a class and limiting people to bringing any complaints through arbitration, but there are many loopholes, including the ability to bring small claims actions and banding together in what amounts to an in--state quasi class action.
