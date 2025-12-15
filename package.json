@@ -7,8 +7,17 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "build": "expo export -p web",
+    "build:all": "expo export -p all",
     "build:web": "expo export -p web",
-    "emulators": "firebase emulators:start"
+    "build:android": "expo export -p android",
+    "build:ios": "expo export -p ios",
+    "emulators": "firebase emulators:start",
+    "deploy": "firebase deploy",
+    "deploy:web": "firebase deploy --only hosting",
+    "deploy:preview": "firebase deploy --only hosting --token $FIREBASE_TOKEN",
+    "deploy:eas": "eas deploy --platform all --profile preview --non-interactive",
+    "deploy:eas:preview": "eas deploy --platform all --profile preview --non-interactive --token $EAS_TOKEN"
   },
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",
