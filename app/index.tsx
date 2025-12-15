@@ -16,9 +16,13 @@ import { Mosaic } from '../src/components/Mosaic';
 
 export default function Home() {
   const { width } = useWindowDimensions();
+  const isMobile = width < 768;
+  const isTablet = width >= 768 && width < 1024;
+  const isDesktop = width >= 1024;
+  
   const getPracticeAreaWidth = () => {
-    if (width >= 1024) return '33.333%'; // lg: 3 columns
-    if (width >= 768) return '50%'; // md: 2 columns
+    if (isDesktop) return '33.333%'; // 3 columns
+    if (isTablet) return '50%'; // 2 columns
     return '100%'; // mobile: 1 column
   };
 
@@ -34,7 +38,11 @@ export default function Home() {
         
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
           {/* Hero Section */}
-          <View style={styles.heroSection}>
+          <View style={[
+            styles.heroSection,
+            isTablet && styles.heroSectionTablet,
+            isDesktop && styles.heroSectionDesktop
+          ]}>
              {/* Mosaic Background */}
              <View style={styles.mosaicContainer}>
                <Mosaic />
@@ -45,18 +53,33 @@ export default function Home() {
              <View style={styles.bottomGradient} />
              
             <Container style={styles.heroContentContainer}>
-               <View style={styles.heroGrid}>
-                <View style={styles.heroTextColumn}>
+               <View style={[
+                 styles.heroGrid,
+                 isMobile && styles.heroGridMobile,
+                 isDesktop && styles.heroGridDesktop
+               ]}>
+                <View style={[
+                  styles.heroTextColumn,
+                  isMobile && styles.heroTextColumnMobile
+                ]}>
                   <View style={styles.heroTaglineContainer}>
                     <View style={styles.heroTaglineBar} />
                     <Text style={styles.heroTaglineText}>
                       Consumer Fraud Protection
                     </Text>
                   </View>
-                  <Text style={styles.heroHeading}>
+                  <Text style={[
+                    styles.heroHeading,
+                    isTablet && styles.heroHeadingTablet,
+                    isDesktop && styles.heroHeadingDesktop
+                  ]}>
                     {HERO_CONTENT.main}. <Text style={styles.heroHeadingHighlight}>Uncompromising Justice.</Text>
                   </Text>
-                  <Text style={styles.heroDescription}>
+                  <Text style={[
+                    styles.heroDescription,
+                    isTablet && styles.heroDescriptionTablet,
+                    isDesktop && styles.heroDescriptionDesktop
+                  ]}>
                     {HERO_CONTENT.description}
                   </Text>
                   <View style={styles.heroButtonContainer}>
@@ -78,7 +101,11 @@ export default function Home() {
                 </View>
                 
                 {/* AI Assessment Widget Integration */}
-                <View style={styles.heroWidgetColumn}>
+                <View style={[
+                  styles.heroWidgetColumn,
+                  isMobile && styles.heroWidgetColumnMobile,
+                  isDesktop && styles.heroWidgetColumnDesktop
+                ]}>
                   <View style={styles.heroWidgetWrapper}>
                     <View style={styles.heroWidgetGlow} />
                     <AICaseAssessment />
@@ -89,29 +116,53 @@ export default function Home() {
           </View>
 
           {/* Statistics Section */}
-          <View style={styles.statsSection}>
+          <View style={[
+            styles.statsSection,
+            isDesktop && styles.statsSectionDesktop
+          ]}>
             <Container>
               <Statistics />
             </Container>
           </View>
 
           {/* Mission / Bio Section */}
-          <View style={styles.missionSection}>
+          <View style={[
+            styles.missionSection,
+            isTablet && styles.missionSectionTablet,
+            isDesktop && styles.missionSectionDesktop
+          ]}>
             {/* Decorative background element */}
             <View style={styles.missionDecorativeBg} />
             
             <Container style={styles.missionContentContainer}>
-              <View style={styles.missionGrid}>
-                <View style={styles.missionTextColumn}>
+              <View style={[
+                styles.missionGrid,
+                isMobile && styles.missionGridMobile,
+                isDesktop && styles.missionGridDesktop
+              ]}>
+                <View style={[
+                  styles.missionTextColumn,
+                  isMobile && styles.missionTextColumnMobile
+                ]}>
                   <Text style={styles.sectionSubtitle}>Who We Are</Text>
-                  <Text style={styles.sectionTitleLight}>
+                  <Text style={[
+                  styles.sectionTitleLight,
+                  isTablet && styles.sectionTitleLightTablet,
+                  isDesktop && styles.sectionTitleLightDesktop
+                ]}>
                     The Firm That <Text style={styles.textBlue}>Fights Back</Text>
                   </Text>
-                  <Text style={styles.bodyText}>
+                  <Text style={[
+                  styles.bodyText,
+                  isTablet && styles.bodyTextTablet
+                ]}>
                     Sentinel Litigation stands apart in a crowded field. While competition handles broad legal matters, 
                     we specialize laser-focused on consumer fraud.
                   </Text>
-                  <Text style={styles.bodyText}>
+                  <Text style={[
+                    styles.bodyText,
+                    isTablet && styles.bodyTextTablet
+                  ]}>
                     In the wake of recent Supreme Court decisions limiting class actions, we exploit every 
                     legal loophole—from small claims actions to quasi-class actions—to ensure your voice is heard.
                   </Text>
@@ -121,8 +172,16 @@ export default function Home() {
                     </Text>
                   </View>
                 </View>
-                <View style={styles.missionCardColumn}>
-                  <Card style={styles.missionCard}>
+                <View style={[
+                  styles.missionCardColumn,
+                  isMobile && styles.missionCardColumnMobile,
+                  isDesktop && styles.missionCardColumnDesktop
+                ]}>
+                  <Card style={[
+                    styles.missionCard,
+                    isMobile && styles.missionCardMobile,
+                    isDesktop && styles.missionCardDesktop
+                  ]}>
                     <Text style={styles.cardTitle}>
                       Why Choose Us?
                     </Text>
@@ -152,15 +211,26 @@ export default function Home() {
           </View>
 
           {/* Practice Areas Preview */}
-          <View style={styles.practiceSection}>
+          <View style={[
+            styles.practiceSection,
+            isTablet && styles.practiceSectionTablet,
+            isDesktop && styles.practiceSectionDesktop
+          ]}>
             <Container>
               <View style={styles.practiceHeader}>
                 <View style={{ maxWidth: 672 }}>
                   <Text style={styles.sectionSubtitle}>Expertise</Text>
-                  <Text style={styles.sectionTitleDark}>
+                  <Text style={[
+                    styles.sectionTitleDark,
+                    isTablet && styles.sectionTitleDarkTablet,
+                    isDesktop && styles.sectionTitleDarkDesktop
+                  ]}>
                     Our Practice Areas
                   </Text>
-                  <Text style={styles.bodyTextDark}>
+                  <Text style={[
+                    styles.bodyTextDark,
+                    isTablet && styles.bodyTextDarkTablet
+                  ]}>
                     We specialize in protecting consumers from corporate abuse. Our focus allows us to stay ahead of the latest fraudulent tactics.
                   </Text>
                 </View>
@@ -176,9 +246,16 @@ export default function Home() {
                 )}
               </View>
 
-              <View style={styles.practiceGrid}>
+              <View style={[
+                styles.practiceGrid,
+                isTablet && styles.practiceGridTablet,
+                isDesktop && styles.practiceGridDesktop
+              ]}>
                 {PRACTICE_AREAS.slice(0, 6).map((area) => (
-                  <View key={area.id} style={{ width: getPracticeAreaWidth(), padding: 16 }}>
+                  <View key={area.id} style={{ 
+                    width: getPracticeAreaWidth(), 
+                    padding: isMobile ? 8 : isTablet ? 12 : 16 
+                  }}>
                     <View style={styles.practiceCardWrapper}>
                        <PracticeAreaCard area={area} />
                     </View>
@@ -197,22 +274,37 @@ export default function Home() {
           </View>
 
           {/* Testimonials */}
-          <View style={styles.testimonialsSection}>
+          <View style={[
+            styles.testimonialsSection,
+            isTablet && styles.testimonialsSectionTablet,
+            isDesktop && styles.testimonialsSectionDesktop
+          ]}>
             {/* Background Pattern */}
             <View style={styles.testimonialsPattern} />
             
             <Container style={{ position: 'relative', zIndex: 10 }}>
               <View style={{ alignItems: 'center', marginBottom: 64 }}>
                 <Text style={styles.sectionSubtitle}>Client Success</Text>
-                <Text style={styles.sectionTitleLight}>
+                <Text style={[
+                  styles.sectionTitleLight,
+                  isTablet && styles.sectionTitleLightTablet,
+                  isDesktop && styles.sectionTitleLightDesktop
+                ]}>
                   Hear From Our Clients
                 </Text>
                 <View style={styles.titleUnderline} />
               </View>
               
-              <View style={styles.practiceGrid}>
+              <View style={[
+                styles.practiceGrid,
+                isTablet && styles.practiceGridTablet,
+                isDesktop && styles.practiceGridDesktop
+              ]}>
                 {TESTIMONIALS.map((testimonial) => (
-                  <View key={testimonial.id} style={{ width: getPracticeAreaWidth(), padding: 16 }}>
+                  <View key={testimonial.id} style={{ 
+                    width: getPracticeAreaWidth(), 
+                    padding: isMobile ? 8 : isTablet ? 12 : 16 
+                  }}>
                     <View style={styles.testimonialCardWrapper}>
                        <TestimonialCard testimonial={testimonial} />
                     </View>
@@ -223,15 +315,31 @@ export default function Home() {
           </View>
 
           {/* Call to Action */}
-          <View style={styles.ctaSection}>
+          <View style={[
+            styles.ctaSection,
+            isTablet && styles.ctaSectionTablet,
+            isDesktop && styles.ctaSectionDesktop
+          ]}>
             <Container>
-              <View style={styles.ctaCard}>
+              <View style={[
+                styles.ctaCard,
+                isTablet && styles.ctaCardTablet,
+                isDesktop && styles.ctaCardDesktop
+              ]}>
                  <View style={styles.ctaOverlay} />
                  <View style={{ position: 'relative', zIndex: 10 }}>
-                  <Text style={styles.ctaTitle}>
+                  <Text style={[
+                    styles.ctaTitle,
+                    isTablet && styles.ctaTitleTablet,
+                    isDesktop && styles.ctaTitleDesktop
+                  ]}>
                     Don't Let Them Get Away With It.
                   </Text>
-                  <Text style={styles.ctaDescription}>
+                  <Text style={[
+                    styles.ctaDescription,
+                    isTablet && styles.ctaDescriptionTablet,
+                    isDesktop && styles.ctaDescriptionDesktop
+                  ]}>
                     If you've been the victim of fraud, time is of the essence. Contact us today for a confidential evaluation of your case.
                   </Text>
                   <View style={styles.ctaButtonRow}>
@@ -275,10 +383,16 @@ const styles = StyleSheet.create({
   // Hero Section
   heroSection: {
     backgroundColor: '#0f172a',
-    paddingVertical: 120, // Increased from 96 for better breathing room
+    paddingVertical: 64, // Mobile-first: 64px on mobile
     position: 'relative',
     overflow: 'hidden',
     zIndex: 0,
+  },
+  heroSectionTablet: {
+    paddingVertical: 96,
+  },
+  heroSectionDesktop: {
+    paddingVertical: 120,
   },
   mosaicContainer: {
     position: 'absolute',
@@ -307,14 +421,26 @@ const styles = StyleSheet.create({
     zIndex: 20,
   },
   heroGrid: {
+    flexDirection: 'column', // Mobile-first: stack vertically
+    alignItems: 'stretch',
+    gap: 32, // Mobile gap
+  },
+  heroGridMobile: {
+    // Already column, no changes needed
+  },
+  heroGridDesktop: {
     flexDirection: 'row',
     alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: 64,
+    gap: 64, // Desktop gap
   },
   heroTextColumn: {
+    width: '100%', // Mobile: full width
+  },
+  heroTextColumnMobile: {
+    marginBottom: 0,
+  },
+  heroTextColumnDesktop: {
     flex: 1,
-    minWidth: 300,
     maxWidth: 768,
   },
   heroTaglineContainer: {
@@ -336,27 +462,49 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   heroHeading: {
-    fontSize: Platform.OS === 'web' ? 64 : 48, // Larger on desktop
+    fontSize: 32, // Mobile-first: 32px
     fontFamily: Platform.OS === 'web' ? 'Georgia, serif' : 'serif',
     fontWeight: 'bold',
     color: 'white',
-    marginBottom: 32,
-    lineHeight: Platform.OS === 'web' ? 72 : 56, // 1.125 ratio for headings
+    marginBottom: 24, // Mobile spacing
+    lineHeight: 40, // Mobile line height
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 4,
+  },
+  heroHeadingTablet: {
+    fontSize: 48,
+    lineHeight: 56,
+    marginBottom: 32,
+  },
+  heroHeadingDesktop: {
+    fontSize: 64,
+    lineHeight: 72,
+    marginBottom: 32,
   },
   heroHeadingHighlight: {
     color: '#3b82f6', // blue-500
   },
   heroDescription: {
-    fontSize: 20,
+    fontSize: 18, // Mobile-first: 18px
     color: '#cbd5e1', // slate-300
-    marginBottom: 48, // Increased spacing
-    lineHeight: 32, // 1.6x line height for readability
+    marginBottom: 32, // Mobile spacing
+    lineHeight: 28, // Mobile line height
     fontWeight: '300',
-    maxWidth: 600,
+    maxWidth: '100%', // Mobile: full width
     letterSpacing: 0.2,
+  },
+  heroDescriptionTablet: {
+    fontSize: 20,
+    lineHeight: 30,
+    marginBottom: 40,
+    maxWidth: 600,
+  },
+  heroDescriptionDesktop: {
+    fontSize: 20,
+    lineHeight: 32,
+    marginBottom: 48,
+    maxWidth: 600,
   },
   heroButtonContainer: {
     flexDirection: 'row',
@@ -400,10 +548,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#334155',
   },
   heroWidgetColumn: {
-    width: '100%',
+    width: '100%', // Mobile: full width
+    marginTop: 32, // Mobile spacing between text and widget
+  },
+  heroWidgetColumnMobile: {
+    marginTop: 32,
+  },
+  heroWidgetColumnDesktop: {
     maxWidth: 480,
     flex: 1,
-    minWidth: 300,
+    marginTop: 0,
   },
   heroWidgetWrapper: {
     position: 'relative',
@@ -423,16 +577,25 @@ const styles = StyleSheet.create({
   // Statistics Section
   statsSection: {
     backgroundColor: '#0f172a',
-    paddingVertical: 64, // Increased padding
+    paddingVertical: 48, // Mobile-first: 48px
     borderTopWidth: 1,
     borderTopColor: '#1e293b',
+  },
+  statsSectionDesktop: {
+    paddingVertical: 64,
   },
 
   // Mission Section
   missionSection: {
-    paddingVertical: 120, // Increased for breathing room
+    paddingVertical: 64, // Mobile-first: 64px
     backgroundColor: '#f8fafc', // slate-50
     position: 'relative',
+  },
+  missionSectionTablet: {
+    paddingVertical: 96,
+  },
+  missionSectionDesktop: {
+    paddingVertical: 120,
   },
   missionDecorativeBg: {
     position: 'absolute',
@@ -449,14 +612,23 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   missionGrid: {
+    flexDirection: 'column', // Mobile-first: stack vertically
+    gap: 32, // Mobile gap
+  },
+  missionGridMobile: {
+    // Already column
+  },
+  missionGridDesktop: {
     flexDirection: 'row',
-    gap: 64,
+    gap: 64, // Desktop gap
     alignItems: 'flex-start',
-    flexWrap: 'wrap',
   },
   missionTextColumn: {
-    flex: 1,
-    minWidth: 300,
+    width: '100%', // Mobile: full width
+    marginBottom: 32, // Mobile spacing before card
+  },
+  missionTextColumnMobile: {
+    marginBottom: 32,
   },
   sectionSubtitle: {
     color: '#2563eb',
@@ -466,38 +638,67 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   sectionTitleLight: {
-    fontSize: Platform.OS === 'web' ? 42 : 36,
+    fontSize: 28, // Mobile-first: 28px
     fontFamily: Platform.OS === 'web' ? 'Georgia, serif' : 'serif',
     fontWeight: 'bold',
     color: '#0f172a',
-    marginBottom: 24,
-    lineHeight: Platform.OS === 'web' ? 50 : 44, // 1.2 ratio
+    marginBottom: 20, // Mobile spacing
+    lineHeight: 36, // Mobile line height
     letterSpacing: -0.5,
   },
+  sectionTitleLightTablet: {
+    fontSize: 36,
+    lineHeight: 44,
+    marginBottom: 24,
+  },
+  sectionTitleLightDesktop: {
+    fontSize: 42,
+    lineHeight: 50,
+    marginBottom: 24,
+  },
   sectionTitleDark: {
-    fontSize: Platform.OS === 'web' ? 42 : 36,
+    fontSize: 28, // Mobile-first: 28px
     fontFamily: Platform.OS === 'web' ? 'Georgia, serif' : 'serif',
     fontWeight: 'bold',
     color: '#0f172a', // dark on white
-    marginBottom: 24,
-    lineHeight: Platform.OS === 'web' ? 50 : 44,
+    marginBottom: 20, // Mobile spacing
+    lineHeight: 36, // Mobile line height
     letterSpacing: -0.5,
+  },
+  sectionTitleDarkTablet: {
+    fontSize: 36,
+    lineHeight: 44,
+    marginBottom: 24,
+  },
+  sectionTitleDarkDesktop: {
+    fontSize: 42,
+    lineHeight: 50,
+    marginBottom: 24,
   },
   textBlue: {
     color: '#2563eb',
   },
   bodyText: {
-    fontSize: 18,
+    fontSize: 16, // Mobile-first: 16px
     color: '#334155', // slate-700
-    marginBottom: 24,
-    lineHeight: 29, // 1.6x for optimal readability
+    marginBottom: 20, // Mobile spacing
+    lineHeight: 26, // Mobile line height (1.6x)
     letterSpacing: 0.1,
   },
-  bodyTextDark: {
+  bodyTextTablet: {
     fontSize: 18,
-    color: '#475569',
     lineHeight: 29,
+    marginBottom: 24,
+  },
+  bodyTextDark: {
+    fontSize: 16, // Mobile-first: 16px
+    color: '#475569',
+    lineHeight: 26, // Mobile line height
     letterSpacing: 0.1,
+  },
+  bodyTextDarkTablet: {
+    fontSize: 18,
+    lineHeight: 29,
   },
   quoteBox: {
     backgroundColor: 'white',
@@ -519,24 +720,38 @@ const styles = StyleSheet.create({
     color: '#1e293b',
   },
   missionCardColumn: {
-    width: '100%',
-    maxWidth: 400,
-    flex: 0,
-    minWidth: 300,
+    width: '100%', // Mobile: full width
     position: 'relative',
     zIndex: 20,
   },
+  missionCardColumnMobile: {
+    marginTop: 0, // No negative margin on mobile
+  },
+  missionCardColumnDesktop: {
+    maxWidth: 400,
+    flex: 0,
+  },
   missionCard: {
     backgroundColor: 'white',
-    padding: 40,
+    padding: 24, // Mobile padding
     borderTopWidth: 8,
     borderTopColor: '#2563eb',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 8,
+    marginTop: 0, // Mobile: no negative margin
+  },
+  missionCardMobile: {
+    padding: 24,
+  },
+  missionCardDesktop: {
+    padding: 40,
+    marginTop: -32, // Desktop: float effect
+    shadowOffset: { width: 0, height: 10 },
     shadowRadius: 20,
     elevation: 10,
-    marginTop: Platform.OS === 'web' ? -32 : 0, // negative margin for float effect
   },
   cardTitle: {
     fontSize: 24,
@@ -580,8 +795,14 @@ const styles = StyleSheet.create({
 
   // Practice Areas
   practiceSection: {
-    paddingVertical: 120, // Increased spacing
+    paddingVertical: 64, // Mobile-first: 64px
     backgroundColor: 'white',
+  },
+  practiceSectionTablet: {
+    paddingVertical: 96,
+  },
+  practiceSectionDesktop: {
+    paddingVertical: 120,
   },
   practiceHeader: {
     flexDirection: 'row',
@@ -608,7 +829,16 @@ const styles = StyleSheet.create({
   practiceGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    marginHorizontal: -8, // Mobile: smaller negative margin
+    gap: 16, // Mobile gap
+  },
+  practiceGridTablet: {
+    marginHorizontal: -12,
+    gap: 24,
+  },
+  practiceGridDesktop: {
     marginHorizontal: -16,
+    gap: 24,
   },
   practiceCardWrapper: {
     backgroundColor: 'white',
@@ -630,10 +860,16 @@ const styles = StyleSheet.create({
 
   // Testimonials
   testimonialsSection: {
-    paddingVertical: 120, // Increased spacing
+    paddingVertical: 64, // Mobile-first: 64px
     backgroundColor: '#f8fafc',
     position: 'relative',
     overflow: 'hidden',
+  },
+  testimonialsSectionTablet: {
+    paddingVertical: 96,
+  },
+  testimonialsSectionDesktop: {
+    paddingVertical: 120,
   },
   testimonialsPattern: {
     position: 'absolute',
@@ -664,22 +900,40 @@ const styles = StyleSheet.create({
 
   // CTA
   ctaSection: {
-    paddingVertical: 100, // Increased spacing
+    paddingVertical: 64, // Mobile-first: 64px
     backgroundColor: 'white',
+  },
+  ctaSectionTablet: {
+    paddingVertical: 80,
+  },
+  ctaSectionDesktop: {
+    paddingVertical: 100,
   },
   ctaCard: {
     backgroundColor: '#0f172a',
-    borderRadius: 20, // More rounded for modern feel
-    padding: Platform.OS === 'web' ? 64 : 48,
+    borderRadius: 16, // Mobile-first: 16px
+    padding: 24, // Mobile padding
     textAlign: 'center',
     shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 8,
+    position: 'relative',
+    overflow: 'hidden',
+    alignItems: 'center',
+  },
+  ctaCardTablet: {
+    padding: 40,
+    borderRadius: 18,
+  },
+  ctaCardDesktop: {
+    padding: 64,
+    borderRadius: 20,
     shadowOffset: { width: 0, height: 12 },
     shadowOpacity: 0.25,
     shadowRadius: 24,
     elevation: 12,
-    position: 'relative',
-    overflow: 'hidden',
-    alignItems: 'center',
   },
   ctaOverlay: {
     position: 'absolute',
@@ -687,23 +941,45 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(30, 58, 138, 0.2)', // blue-900/20
   },
   ctaTitle: {
-    fontSize: Platform.OS === 'web' ? 36 : 30,
+    fontSize: 28, // Mobile-first: 28px
     fontWeight: 'bold',
     color: 'white',
     fontFamily: Platform.OS === 'web' ? 'Georgia, serif' : 'serif',
-    marginBottom: 20,
+    marginBottom: 16, // Mobile spacing
     textAlign: 'center',
-    lineHeight: Platform.OS === 'web' ? 44 : 38,
+    lineHeight: 36, // Mobile line height
     letterSpacing: -0.5,
   },
+  ctaTitleTablet: {
+    fontSize: 32,
+    lineHeight: 40,
+    marginBottom: 20,
+  },
+  ctaTitleDesktop: {
+    fontSize: 36,
+    lineHeight: 44,
+    marginBottom: 20,
+  },
   ctaDescription: {
-    fontSize: 18,
+    fontSize: 16, // Mobile-first: 16px
     color: '#cbd5e1',
+    marginBottom: 32, // Mobile spacing
+    maxWidth: '100%', // Mobile: full width
+    textAlign: 'center',
+    lineHeight: 26, // Mobile line height
+    letterSpacing: 0.1,
+  },
+  ctaDescriptionTablet: {
+    fontSize: 18,
+    lineHeight: 29,
     marginBottom: 40,
     maxWidth: 600,
-    textAlign: 'center',
+  },
+  ctaDescriptionDesktop: {
+    fontSize: 18,
     lineHeight: 29,
-    letterSpacing: 0.1,
+    marginBottom: 40,
+    maxWidth: 600,
   },
   ctaButtonRow: {
     flexDirection: 'row',

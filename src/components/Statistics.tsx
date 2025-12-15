@@ -1,23 +1,45 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, useWindowDimensions } from 'react-native';
 import { STATISTICS } from '../constants/content';
 
 export function Statistics() {
+  const { width } = useWindowDimensions();
+  const isMobile = width < 768;
+  const isDesktop = width >= 1024;
+
   return (
-    <View className="flex-row flex-wrap justify-between items-center gap-y-8">
+    <View style={[
+      styles.container,
+      isMobile && styles.containerMobile,
+      isDesktop && styles.containerDesktop
+    ]}>
       {STATISTICS.map((stat) => (
-        <View key={stat.id} className="flex-1 min-w-[140px] items-center">
-          <View className="flex-row items-baseline mb-2">
-            <Text className="text-4xl lg:text-5xl font-bold text-white font-serif" style={{ color: 'white' }}>
+        <View key={stat.id} style={[
+          styles.statItem,
+          isMobile && styles.statItemMobile
+        ]}>
+          <View style={styles.statValueContainer}>
+            <Text style={[
+              styles.statValue,
+              isMobile && styles.statValueMobile,
+              isDesktop && styles.statValueDesktop
+            ]}>
               {stat.value}
             </Text>
-            {stat.suffix ? (
-            <Text className="text-2xl font-bold text-blue-500 ml-1" style={{ color: '#3b82f6' }}>
-              {stat.suffix}
-            </Text>
-            ) : null}
+            {stat.suffix && (
+              <Text style={[
+                styles.statSuffix,
+                isMobile && styles.statSuffixMobile,
+                isDesktop && styles.statSuffixDesktop
+              ]}>
+                {stat.suffix}
+              </Text>
+            )}
           </View>
-          <Text className="text-slate-400 text-center font-medium text-sm uppercase tracking-wide" style={{ color: '#94a3b8' }}>
+          <Text style={[
+            styles.statLabel,
+            isMobile && styles.statLabelMobile
+          ]}>
             {stat.label}
           </Text>
         </View>
@@ -25,4 +47,68 @@ export function Statistics() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'column', // Mobile-first: single column
+    gap: 32,
+    alignItems: 'stretch',
+  },
+  containerMobile: {
+    gap: 32,
+  },
+  containerDesktop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 16,
+  },
+  statItem: {
+    alignItems: 'center',
+    width: '100%', // Mobile: full width
+  },
+  statItemMobile: {
+    paddingVertical: 16,
+  },
+  statValueContainer: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    marginBottom: 8,
+  },
+  statValue: {
+    fontSize: 32, // Mobile-first: 32px
+    fontWeight: 'bold',
+    color: 'white',
+    fontFamily: 'serif',
+  },
+  statValueMobile: {
+    fontSize: 32,
+  },
+  statValueDesktop: {
+    fontSize: 48,
+  },
+  statSuffix: {
+    fontSize: 20, // Mobile-first: 20px
+    fontWeight: 'bold',
+    color: '#3b82f6',
+    marginLeft: 4,
+  },
+  statSuffixMobile: {
+    fontSize: 20,
+  },
+  statSuffixDesktop: {
+    fontSize: 28,
+  },
+  statLabel: {
+    color: '#94a3b8',
+    textAlign: 'center',
+    fontWeight: '500',
+    fontSize: 12,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
+  statLabelMobile: {
+    fontSize: 11,
+  },
+});
 

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { Link } from 'expo-router';
 import { Card } from './Card';
 import { PracticeArea } from '../types/content';
@@ -8,25 +8,21 @@ interface PracticeAreaCardProps {
 }
 
 export function PracticeAreaCard({ area }: PracticeAreaCardProps) {
-  // Map icons to simple visual elements or SVGs if we had them
-  // For now, we'll use a styled view with the first letter or a generic shape
-  
   return (
     <Link href={`/practice-areas/${area.slug}` as any} asChild>
-      <TouchableOpacity className="flex-1">
-        <Card className="hover:shadow-xl transition-shadow h-full border-t-4 border-t-transparent hover:border-t-primary bg-white dark:bg-slate-800">
-          <View className="w-12 h-12 bg-blue-50 dark:bg-slate-700 rounded-xl items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-             {/* Icon placeholder */}
-             <View className="w-6 h-6 bg-primary dark:bg-blue-400 rounded-md group-hover:bg-white" />
+      <TouchableOpacity style={styles.wrapper}>
+        <Card style={styles.card}>
+          <View style={styles.iconContainer}>
+             <View style={styles.icon} />
           </View>
-          <Text className="text-xl font-serif font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors" style={{ color: '#0f172a' }}>{area.title}</Text>
-          <Text className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed" style={{ color: '#475569' }}>{area.shortDescription}</Text>
+          <Text style={styles.title}>{area.title}</Text>
+          <Text style={styles.description}>{area.shortDescription}</Text>
           
           {area.subcategories.length > 0 && (
-             <View className="mt-auto pt-4 border-t border-slate-100 dark:border-slate-700 w-full">
-               <Text className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2" style={{ color: '#94a3b8' }}>Includes:</Text>
+             <View style={styles.subcategoriesContainer}>
+               <Text style={styles.subcategoriesLabel}>Includes:</Text>
                {area.subcategories.slice(0, 2).map((sub, i) => (
-                 <Text key={i} className="text-slate-500 text-sm mb-1 truncate" style={{ color: '#64748b' }}>• {sub.title}</Text>
+                 <Text key={i} style={styles.subcategoryItem}>• {sub.title}</Text>
                ))}
              </View>
           )}
@@ -35,3 +31,63 @@ export function PracticeAreaCard({ area }: PracticeAreaCardProps) {
     </Link>
   );
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    height: '100%',
+  },
+  card: {
+    height: '100%',
+    borderTopWidth: 4,
+    borderTopColor: 'transparent',
+  },
+  iconContainer: {
+    width: 48,
+    height: 48,
+    backgroundColor: '#dbeafe',
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    backgroundColor: '#2563eb',
+    borderRadius: 6,
+  },
+  title: {
+    fontSize: 20,
+    fontFamily: Platform.OS === 'web' ? 'Georgia, serif' : 'serif',
+    fontWeight: 'bold',
+    color: '#0f172a',
+    marginBottom: 12,
+  },
+  description: {
+    fontSize: 15,
+    color: '#475569',
+    lineHeight: 24,
+    marginBottom: 16,
+  },
+  subcategoriesContainer: {
+    marginTop: 'auto',
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#f1f5f9',
+    width: '100%',
+  },
+  subcategoriesLabel: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    color: '#94a3b8',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 8,
+  },
+  subcategoryItem: {
+    fontSize: 13,
+    color: '#64748b',
+    marginBottom: 4,
+  },
+});

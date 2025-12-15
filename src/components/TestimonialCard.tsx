@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import { Card } from './Card';
 import { Testimonial } from '../types/content';
 
@@ -8,26 +8,88 @@ interface TestimonialCardProps {
 
 export function TestimonialCard({ testimonial }: TestimonialCardProps) {
   return (
-    <Card className="mb-4 relative bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 h-full">
+    <Card style={styles.card}>
        {/* Quote Icon */}
-       <View className="absolute top-6 left-6 opacity-10 pointer-events-none">
-        <Text className="text-6xl font-serif text-primary" style={{ color: '#0f172a' }}>"</Text>
+       <View style={styles.quoteIcon}>
+        <Text style={styles.quoteMark}>"</Text>
       </View>
 
-      <View className="flex-row mb-4">
+      <View style={styles.ratingContainer}>
         {[...Array(5)].map((_, i) => (
-          <Text key={i} className={`${i < testimonial.rating ? 'text-yellow-400' : 'text-slate-300'} text-lg`} style={{ color: i < testimonial.rating ? '#facc15' : '#cbd5e1' }}>★</Text>
+          <Text key={i} style={[
+            styles.star,
+            i < testimonial.rating && styles.starActive
+          ]}>★</Text>
         ))}
       </View>
       
-      <Text className="text-slate-600 dark:text-slate-300 italic mb-6 text-lg leading-relaxed relative z-10" style={{ color: '#475569' }}>
+      <Text style={styles.quote}>
         "{testimonial.quote}"
       </Text>
       
-      <View className="mt-auto border-t border-slate-50 pt-4">
-        <Text className="font-bold text-slate-900 dark:text-white" style={{ color: '#0f172a' }}>- {testimonial.author}</Text>
-        <Text className="text-slate-500 text-sm" style={{ color: '#64748b' }}>Verified Client</Text>
+      <View style={styles.footer}>
+        <Text style={styles.author}>- {testimonial.author}</Text>
+        <Text style={styles.verified}>Verified Client</Text>
       </View>
     </Card>
   );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    marginBottom: 16,
+    position: 'relative',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.05)',
+    height: '100%',
+  },
+  quoteIcon: {
+    position: 'absolute',
+    top: 24,
+    left: 24,
+    opacity: 0.1,
+  },
+  quoteMark: {
+    fontSize: 64,
+    fontFamily: Platform.OS === 'web' ? 'Georgia, serif' : 'serif',
+    color: '#0f172a',
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    marginBottom: 16,
+  },
+  star: {
+    fontSize: 18,
+    color: '#cbd5e1',
+    marginRight: 4,
+  },
+  starActive: {
+    color: '#facc15',
+  },
+  quote: {
+    fontSize: 16,
+    color: '#475569',
+    fontStyle: 'italic',
+    marginBottom: 24,
+    lineHeight: 26,
+    position: 'relative',
+    zIndex: 10,
+  },
+  footer: {
+    marginTop: 'auto',
+    borderTopWidth: 1,
+    borderTopColor: '#f8fafc',
+    paddingTop: 16,
+  },
+  author: {
+    fontWeight: 'bold',
+    color: '#0f172a',
+    fontSize: 16,
+    marginBottom: 4,
+  },
+  verified: {
+    color: '#64748b',
+    fontSize: 13,
+  },
+});
