@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Stack, useLocalSearchParams, Link } from 'expo-router';
 import { Container } from '../../src/components/Container';
 import { Navigation } from '../../src/components/Navigation';
@@ -91,8 +91,8 @@ export default function BlogPost() {
                 <View className="flex-row flex-wrap -mx-4">
                   {relatedPosts.map((relatedPost) => (
                     <View key={relatedPost.id} className="w-full md:w-1/3 p-4">
-                      <Link href={`/blog/${relatedPost.slug}`}>
-                        <View className="hover:opacity-80 transition-opacity">
+                      <Link href={`/blog/${relatedPost.slug}`} asChild>
+                        <TouchableOpacity className="hover:opacity-80 transition-opacity">
                           <Text className="text-sm font-semibold text-primary uppercase tracking-wider mb-2">
                             {relatedPost.category}
                           </Text>
@@ -106,7 +106,7 @@ export default function BlogPost() {
                               day: 'numeric',
                             })}
                           </Text>
-                        </View>
+                        </TouchableOpacity>
                       </Link>
                     </View>
                   ))}

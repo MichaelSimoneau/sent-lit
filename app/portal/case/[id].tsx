@@ -17,7 +17,11 @@ export default function CaseDetail() {
         <ScrollView>
           <Container>
             <View className="py-8">
-              <Link href="/portal" className="text-slate-500 mb-4">← Back to Dashboard</Link>
+              <Link href="/portal" asChild>
+                <TouchableOpacity>
+                  <Text className="text-slate-500 mb-4">← Back to Dashboard</Text>
+                </TouchableOpacity>
+              </Link>
               
               <View className="flex-row justify-between items-start mb-6">
                 <View>
@@ -36,7 +40,9 @@ export default function CaseDetail() {
                   <View className="h-px flex-1 bg-slate-100 dark:bg-slate-700" />
                 </View>
                 <Text className="text-slate-700 dark:text-slate-300 text-lg">
-                  "No new filings today. The next deadline is <Text className="font-bold">November 15</Text> for the initial status hearing. We are currently waiting for the opposing counsel to respond to our settlement demand."
+                  "No new filings today. The next deadline is "
+                  <Text className="font-bold">November 15</Text>
+                  " for the initial status hearing. We are currently waiting for the opposing counsel to respond to our settlement demand."
                 </Text>
               </View>
 

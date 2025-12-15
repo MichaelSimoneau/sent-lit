@@ -11,9 +11,11 @@ export function Statistics() {
             <Text className="text-4xl lg:text-5xl font-bold text-white font-serif">
               {stat.value}
             </Text>
+            {stat.suffix ? (
             <Text className="text-2xl font-bold text-white ml-1">
               {stat.suffix}
             </Text>
+            ) : null}
           </View>
           <Text className="text-slate-300 text-center font-medium text-sm uppercase tracking-wide">
             {stat.label}

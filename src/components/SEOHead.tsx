@@ -1,5 +1,5 @@
 import React from 'react';
-import { Head } from 'expo-router';
+import Head from 'expo-router/head';
 
 interface SEOHeadProps {
   title?: string;

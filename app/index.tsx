@@ -11,6 +11,8 @@ import { AICaseAssessment } from '../src/components/AICaseAssessment';
 import { PracticeAreaCard } from '../src/components/PracticeAreaCard';
 import { TestimonialCard } from '../src/components/TestimonialCard';
 import { HERO_CONTENT, PRACTICE_AREAS, TESTIMONIALS } from '../src/constants/content';
+import { SEOHead } from '../src/components/SEOHead';
+import { Mosaic } from '../src/components/Mosaic';
 
 export default function Home() {
   const { width } = useWindowDimensions();
@@ -19,8 +21,13 @@ export default function Home() {
     if (width >= 768) return '50%'; // md: 2 columns
     return '100%'; // mobile: 1 column
   };
+
   return (
     <>
+      <SEOHead 
+        title="Sentinel Litigation | Consumer Fraud Protection"
+        description={HERO_CONTENT.description}
+      />
       <Stack.Screen options={{ title: 'Home', headerShown: false }} />
       <View className="flex-1 bg-white dark:bg-slate-900">
         <Navigation />
@@ -28,10 +35,15 @@ export default function Home() {
         <ScrollView>
           {/* Hero Section */}
           <View className="bg-primary dark:bg-slate-950 py-20 lg:py-32 relative overflow-hidden">
-             {/* Gradient Overlay for visual depth */}
-             <View className="absolute inset-0 bg-slate-900/50 pointer-events-none" />
+             {/* Mosaic Background */}
+             <View className="absolute inset-0 z-0 opacity-50">
+               <Mosaic />
+             </View>
              
-            <Container>
+             {/* Gradient Overlay for visual depth */}
+             <View className="absolute inset-0 bg-slate-900/80 pointer-events-none z-10" />
+             
+            <Container className="relative z-20">
                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 64, flexWrap: 'wrap' }}>
                 <View style={{ flex: 1, minWidth: 300, maxWidth: 768 }}>
                   <Text className="text-slate-400 font-bold uppercase tracking-wider mb-4">
@@ -163,7 +175,7 @@ export default function Home() {
                 <Text className="text-slate-300 mb-8 max-w-2xl mx-auto text-lg">
                   If you've been the victim of fraud, time is of the essence. Contact us today for a confidential evaluation of your case.
                 </Text>
-                <View className="flex-row flex-wrap justify-center" style={{ gap: 16 }}>
+                <View className="flex-row flex-wrap justify-center gap-4">
                   <Button 
                     title="Get Free AI Assessment" 
                     size="lg" 
