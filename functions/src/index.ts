@@ -14,23 +14,22 @@ const geminiApiKey = defineSecret("GEMINI_API_KEY");
 const getGeminiApiKey = () => {
   // Try secret value first (when deployed), then fallback to env var (local dev)
   try {
-    return geminiApiKey.value() || process.env.EXPO_SECRET_GEMINI_API_KEY || "";
-  } catch {
-    return process.env.EXPO_SECRET_GEMINI_API_KEY || process.env.GEMINI_API_KEY || "";
+    const secretValue = geminiApiKey.value();
+    if (secretValue) return secretValue;
+  } catch (e) {
+    // Secret not available (local dev or not deployed yet)
   }
+  return process.env.EXPO_SECRET_GEMINI_API_KEY || process.env.GEMINI_API_KEY || "";
 };
 
-// Initialize genAI lazily to avoid errors during module load
-let genAI: GoogleGenerativeAI | null = null;
+// Get Gemini AI instance - must be called inside function handlers to access secrets
 const getGenAI = () => {
-  if (!genAI) {
-    const apiKey = getGeminiApiKey();
-    if (!apiKey) {
-      throw new Error("GEMINI_API_KEY not configured. Set it via firebase functions:secrets:set GEMINI_API_KEY or EXPO_SECRET_GEMINI_API_KEY env var for local dev");
-    }
-    genAI = new GoogleGenerativeAI(apiKey);
+  const apiKey = getGeminiApiKey();
+  if (!apiKey) {
+    console.error("GEMINI_API_KEY not found. Available env vars:", Object.keys(process.env).filter(k => k.includes("GEMINI")));
+    throw new Error("GEMINI_API_KEY not configured. Set it via firebase functions:secrets:set GEMINI_API_KEY or EXPO_SECRET_GEMINI_API_KEY env var for local dev");
   }
-  return genAI;
+  return new GoogleGenerativeAI(apiKey);
 };
 
 const AI_CONFIG = {
