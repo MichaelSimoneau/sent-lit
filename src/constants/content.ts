@@ -11,14 +11,15 @@ export const COMPANY_INFO = {
     state: 'IL',
     zip: '60603',
   },
-  email: 'info@sentinellitigation.com', // Placeholder
+  email: 'info@sentinellegal.us', // Updated domain
   mapUrl: 'https://maps.google.com/?q=20+S+Clark+St+Suite+1800+Chicago+IL+60603',
 };
 
 export const HERO_CONTENT = {
   main: 'SENTINELS FOR JUSTICE',
   subheading: 'We Are On Your Side',
-  description: 'When you retain Sentinel Litigation, you are retaining one of the leading firms practicing in the area of consumer rights. Specializing in cases where individuals, families, and entities have been defrauded.',
+  description: 'Founded by David Rodriguez, Sentinel Litigation is one of the leading firms practicing in the area of consumer rights. When you retain Sentinel Litigation, you are retaining a firm that specializes in cases where individuals, families, and entities have been defrauded or are victims of consumer fraud.',
+  founder: 'David Rodriguez, Founding Attorney',
   ctaPrimary: 'Get Instant Case Assessment',
   ctaSecondary: 'Call Us Today!',
 };
@@ -190,16 +191,16 @@ export const NAVIGATION: NavItem[] = [
 export const ATTORNEYS: Attorney[] = [
   {
     id: '1',
-    name: 'Daniel A. Edelman',
-    title: 'Founding Partner',
-    slug: 'daniel-a-edelman',
-    bio: 'An experienced consumer rights advocate...',
+    name: 'David Rodriguez',
+    title: 'Founding Attorney',
+    slug: 'david-rodriguez',
+    bio: 'David Rodriguez is the founding attorney of Sentinel Litigation, dedicated to protecting consumers from fraud, deception, and unfair practices. With extensive experience in consumer rights law, he specializes in cases where individuals, families, and entities have been defrauded or are victims of consumer fraud.',
     image: '/assets/placeholder-attorney.png',
     practiceAreas: ['credit-reporting', 'debt-collection'],
-    education: ['J.D., University of Chicago'],
+    education: ['J.D., DePaul University College of Law'],
     admissions: ['Illinois', 'U.S. Supreme Court'],
     phone: '312-626-3585',
-    email: 'dedelman@sentinellitigation.com',
+    email: 'drodriguez@sentinellegal.us',
   },
   // Add other attorneys as needed based on competitor copy
 ];
@@ -238,7 +239,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: 'understanding-fdcpa-rights',
     excerpt: 'Debt collectors cannot harass you. Learn what actions are prohibited under federal law.',
     content: 'Full content here...',
-    author: 'Daniel A. Edelman',
+    author: 'David Rodriguez',
     date: '2023-10-15',
     category: 'Debt Collection',
   },
@@ -258,7 +259,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: 'dispute-credit-errors',
     excerpt: 'A step-by-step guide to correcting inaccurate information on your credit report.',
     content: 'Full content here...',
-    author: 'Daniel A. Edelman',
+    author: 'David Rodriguez',
     date: '2023-09-20',
     category: 'Credit Reporting',
   },

@@ -121,7 +121,7 @@ export default function PayOnline() {
               <Text className="text-slate-600 dark:text-slate-300">
                 If you have questions about your payment or need assistance, please contact us at{' '}
                 <Text className="text-primary font-semibold">312-626-3585</Text> or{' '}
-                <Text className="text-primary font-semibold">info@sentinellitigation.com</Text>
+                <Text className="text-primary font-semibold">info@sentinellegal.us</Text>
               </Text>
             </Card>
           </Container>

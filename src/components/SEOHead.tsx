@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'expo-router/head';
+import { getWebsiteUrl } from '../utils/website';
 
 interface SEOHeadProps {
   title?: string;
@@ -13,9 +14,11 @@ export const SEOHead = ({
   title = 'Sentinel Litigation | Consumer Fraud Protection', 
   description = 'Leading consumer rights law firm specializing in fraud protection.', 
   image = '/assets/icon.png', // Fallback or absolute URL
-  url = 'https://sentinel-litigation.web.app',
+  url,
   type = 'website' 
 }: SEOHeadProps) => {
+  // Use provided URL or get from window object
+  const websiteUrl = url || getWebsiteUrl();
   const fullTitle = title.includes('Sentinel') ? title : `${title} | Sentinel Litigation`;
   
   return (
@@ -27,7 +30,7 @@ export const SEOHead = ({
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
-      <meta property="og:url" content={url} />
+      <meta property="og:url" content={websiteUrl} />
       <meta property="og:type" content={type} />
       <meta property="og:site_name" content="Sentinel Litigation" />
       <meta property="og:locale" content="en_US" />

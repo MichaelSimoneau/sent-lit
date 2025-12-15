@@ -107,6 +107,9 @@ export default function Home() {
                   ]}>
                     {HERO_CONTENT.main}. <Text style={styles.heroHeadingHighlight}>Uncompromising Justice.</Text>
                   </Text>
+                  <Text style={styles.heroFounder}>
+                    Founded by {HERO_CONTENT.founder}
+                  </Text>
                   <Text style={[
                     styles.heroDescription,
                     isTablet && styles.heroDescriptionTablet,
@@ -189,8 +192,8 @@ export default function Home() {
                   styles.bodyText,
                   isTablet && styles.bodyTextTablet
                 ]}>
-                    Sentinel Litigation stands apart in a crowded field. While competition handles broad legal matters, 
-                    we specialize laser-focused on consumer fraud.
+                    Founded by David Rodriguez, Sentinel Litigation stands apart in a crowded field. While competition handles broad legal matters, 
+                    we specialize laser-focused on consumer fraud. David Rodriguez brings extensive experience and dedication to protecting consumers from corporate abuse.
                   </Text>
                   <Text style={[
                     styles.bodyText,
@@ -513,6 +516,14 @@ const styles = StyleSheet.create({
   },
   heroHeadingHighlight: {
     color: '#3b82f6', // blue-500
+  },
+  heroFounder: {
+    fontSize: 16, // Mobile-first
+    color: '#60a5fa', // blue-400
+    fontWeight: '600',
+    marginBottom: 16,
+    fontStyle: 'italic',
+    letterSpacing: 0.5,
   },
   heroDescription: {
     fontSize: 18, // Mobile-first: 18px
