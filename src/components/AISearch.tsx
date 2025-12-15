@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, ActivityIndicator, Modal } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, ActivityIndicator, Modal, StyleSheet, Platform } from 'react-native';
 import { AIService } from '../services/ai/gemini';
 import { useRouter } from 'expo-router';
 
@@ -29,79 +29,208 @@ export function AISearch() {
   };
 
   return (
-    <View className="relative z-50">
-      <View className="flex-row items-center bg-slate-100 dark:bg-slate-800 rounded-full px-4 py-2 w-full max-w-md">
+    <View style={styles.container}>
+      <View style={styles.searchBar}>
         <TextInput
-          className="flex-1 text-slate-900 dark:text-white text-base mr-2 outline-none"
+          style={styles.input}
           placeholder="Ask AI: 'I was harassed by a collector...'"
           placeholderTextColor="#94a3b8"
           value={query}
           onChangeText={setQuery}
           onSubmitEditing={handleSearch}
+          returnKeyType="search"
         />
-        <TouchableOpacity onPress={handleSearch} disabled={isSearching}>
+        <TouchableOpacity 
+          style={styles.searchButton}
+          onPress={handleSearch} 
+          disabled={isSearching}
+        >
           {isSearching ? (
-            <ActivityIndicator size="small" color="#2685C7" />
+            <ActivityIndicator size="small" color="#2563eb" />
           ) : (
-            <Text className="text-primary font-semibold">Ask AI</Text>
+            <Text style={styles.searchButtonText}>Ask AI</Text>
           )}
         </TouchableOpacity>
       </View>
 
       {/* AI Results Modal/Dropdown */}
       {showResults && (
-        <View className="absolute top-12 left-0 right-0 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 p-4 max-h-96">
-          <View className="flex-row justify-between items-center mb-2">
-            <Text className="text-sm font-bold text-slate-500 uppercase">AI Analysis</Text>
+        <View style={styles.resultsContainer}>
+          <View style={styles.resultsHeader}>
+            <Text style={styles.resultsHeaderText}>AI Analysis</Text>
             <TouchableOpacity onPress={() => setShowResults(false)}>
-              <Text className="text-slate-400">Close</Text>
+              <Text style={styles.closeButton}>Close</Text>
             </TouchableOpacity>
           </View>
           
           {isSearching ? (
-            <Text className="text-slate-500 text-center py-4">Analyzing your query...</Text>
+            <Text style={styles.loadingText}>Analyzing your query...</Text>
           ) : results ? (
             <View>
-              <Text className="font-bold text-lg mb-2 text-slate-900 dark:text-white">
+              <Text style={styles.strengthText}>
                 Strength: {results.caseStrength}/10
               </Text>
-              <Text className="text-slate-600 dark:text-slate-300 mb-4 text-sm leading-relaxed">
+              <Text style={styles.summaryText}>
                 {results.summary}
               </Text>
               
-              <Text className="font-semibold text-primary mb-2 text-sm">Recommended Areas:</Text>
-              <View className="flex-row flex-wrap gap-2 mb-4">
+              <Text style={styles.recommendedLabel}>Recommended Areas:</Text>
+              <View style={styles.tagsContainer}>
                 {results.recommendedPracticeAreas.map((area: string, i: number) => (
                   <TouchableOpacity 
                     key={i}
-                    className="bg-primary/10 px-3 py-1 rounded-full"
+                    style={styles.tag}
                     onPress={() => {
                       // Simple routing logic - in real app match slug
                       router.push('/practice-areas');
                       setShowResults(false);
                     }}
                   >
-                    <Text className="text-primary text-xs font-medium">{area}</Text>
+                    <Text style={styles.tagText}>{area}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
               
               <TouchableOpacity 
-                className="bg-primary py-2 rounded-lg items-center"
+                style={styles.consultationButton}
                 onPress={() => {
                   router.push('/contact'); // Should go to consultation with pre-filled info
                   setShowResults(false);
                 }}
               >
-                <Text className="text-white font-bold text-sm">Get Free Consultation</Text>
+                <Text style={styles.consultationButtonText}>Get Free Consultation</Text>
               </TouchableOpacity>
             </View>
           ) : (
-            <Text className="text-red-500">Failed to analyze. Please try again.</Text>
+            <Text style={styles.errorText}>Failed to analyze. Please try again.</Text>
           )}
         </View>
       )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'relative',
+    zIndex: 50,
+    width: '100%',
+  },
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f1f5f9',
+    borderRadius: 9999,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    width: '100%',
+  },
+  input: {
+    flex: 1,
+    color: '#0f172a',
+    fontSize: 15,
+    marginRight: 8,
+    paddingVertical: Platform.OS === 'web' ? 4 : 0,
+    ...(Platform.OS === 'web' && { outlineStyle: 'none' as any }),
+  },
+  searchButton: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  searchButtonText: {
+    color: '#2563eb',
+    fontWeight: '600',
+    fontSize: 14,
+  },
+  resultsContainer: {
+    position: 'absolute',
+    top: '100%',
+    left: 0,
+    right: 0,
+    marginTop: 8,
+    backgroundColor: 'white',
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    padding: 16,
+    maxHeight: 384,
+    zIndex: 100,
+  },
+  resultsHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  resultsHeaderText: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#64748b',
+    textTransform: 'uppercase',
+  },
+  closeButton: {
+    color: '#94a3b8',
+    fontSize: 14,
+  },
+  loadingText: {
+    color: '#64748b',
+    textAlign: 'center',
+    paddingVertical: 16,
+  },
+  strengthText: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 8,
+    color: '#0f172a',
+  },
+  summaryText: {
+    color: '#475569',
+    marginBottom: 16,
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  recommendedLabel: {
+    fontWeight: '600',
+    color: '#2563eb',
+    marginBottom: 8,
+    fontSize: 14,
+  },
+  tagsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 16,
+  },
+  tag: {
+    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 9999,
+  },
+  tagText: {
+    color: '#2563eb',
+    fontSize: 12,
+    fontWeight: '500',
+  },
+  consultationButton: {
+    backgroundColor: '#2563eb',
+    paddingVertical: 8,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  consultationButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  errorText: {
+    color: '#ef4444',
+    fontSize: 14,
+  },
+});
 

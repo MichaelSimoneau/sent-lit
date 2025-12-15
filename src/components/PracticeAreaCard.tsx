@@ -41,11 +41,12 @@ const styles = StyleSheet.create({
     height: '100%',
     borderTopWidth: 4,
     borderTopColor: 'transparent',
+    backgroundColor: '#0f172a', // slate-900 - dark background for white text
   },
   iconContainer: {
     width: 48,
     height: 48,
-    backgroundColor: '#dbeafe',
+    backgroundColor: 'rgba(37, 99, 235, 0.2)', // blue-600 with opacity for dark background
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -54,19 +55,19 @@ const styles = StyleSheet.create({
   icon: {
     width: 24,
     height: 24,
-    backgroundColor: '#2563eb',
+    backgroundColor: '#60a5fa', // blue-400 - lighter blue for dark background
     borderRadius: 6,
   },
   title: {
     fontSize: 20,
     fontFamily: Platform.OS === 'web' ? 'Georgia, serif' : 'serif',
     fontWeight: 'bold',
-    color: '#0f172a',
+    color: '#ffffff', // white text
     marginBottom: 12,
   },
   description: {
     fontSize: 15,
-    color: '#475569',
+    color: '#cbd5e1', // slate-300 - light gray for readability
     lineHeight: 24,
     marginBottom: 16,
   },
@@ -74,20 +75,20 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: '#f1f5f9',
+    borderTopColor: '#334155', // slate-700 - darker border for dark background
     width: '100%',
   },
   subcategoriesLabel: {
     fontSize: 11,
     fontWeight: 'bold',
-    color: '#94a3b8',
+    color: '#94a3b8', // slate-400 - lighter gray
     textTransform: 'uppercase',
     letterSpacing: 1,
     marginBottom: 8,
   },
   subcategoryItem: {
     fontSize: 13,
-    color: '#64748b',
+    color: '#cbd5e1', // slate-300 - light gray for readability
     marginBottom: 4,
   },
 });

@@ -20,10 +20,42 @@ export default function Home() {
   const isTablet = width >= 768 && width < 1024;
   const isDesktop = width >= 1024;
   
-  const getPracticeAreaWidth = () => {
-    if (isDesktop) return '33.333%'; // 3 columns
-    if (isTablet) return '50%'; // 2 columns
-    return '100%'; // mobile: 1 column
+  const getPracticeAreaStyle = () => {
+    if (isDesktop) {
+      // 3 columns: flex-basis 33.333% with padding for spacing
+      return { 
+        flexBasis: '33.333%' as any,
+        flexGrow: 0,
+        flexShrink: 0,
+        minWidth: 0,
+        paddingLeft: 12,
+        paddingRight: 12,
+        paddingTop: 12,
+        paddingBottom: 12,
+      };
+    }
+    if (isTablet) {
+      // 2 columns: flex-basis 50% with padding for spacing
+      return { 
+        flexBasis: '50%' as any,
+        flexGrow: 0,
+        flexShrink: 0,
+        minWidth: 0,
+        paddingLeft: 12,
+        paddingRight: 12,
+        paddingTop: 12,
+        paddingBottom: 12,
+      };
+    }
+    // Mobile: full width
+    return { 
+      flexBasis: '100%' as any,
+      flexGrow: 0,
+      flexShrink: 0,
+      paddingLeft: 12,
+      paddingRight: 12,
+      paddingBottom: 16,
+    };
   };
 
   return (
@@ -142,7 +174,8 @@ export default function Home() {
               ]}>
                 <View style={[
                   styles.missionTextColumn,
-                  isMobile && styles.missionTextColumnMobile
+                  isMobile && styles.missionTextColumnMobile,
+                  isDesktop && styles.missionTextColumnDesktop
                 ]}>
                   <Text style={styles.sectionSubtitle}>Who We Are</Text>
                   <Text style={[
@@ -197,7 +230,7 @@ export default function Home() {
                           <View style={styles.checkIcon}>
                             <View style={styles.checkDot} />
                           </View>
-                          <Text style={styles.checkListText}>{item}</Text>
+                          <Text style={[styles.checkListText, { color: '#ffffff' }]}>{item}</Text>
                         </View>
                       ))}
                     </View>
@@ -252,10 +285,7 @@ export default function Home() {
                 isDesktop && styles.practiceGridDesktop
               ]}>
                 {PRACTICE_AREAS.slice(0, 6).map((area) => (
-                  <View key={area.id} style={{ 
-                    width: getPracticeAreaWidth(), 
-                    padding: isMobile ? 8 : isTablet ? 12 : 16 
-                  }}>
+                  <View key={area.id} style={getPracticeAreaStyle()}>
                     <View style={styles.practiceCardWrapper}>
                        <PracticeAreaCard area={area} />
                     </View>
@@ -301,10 +331,7 @@ export default function Home() {
                 isDesktop && styles.practiceGridDesktop
               ]}>
                 {TESTIMONIALS.map((testimonial) => (
-                  <View key={testimonial.id} style={{ 
-                    width: getPracticeAreaWidth(), 
-                    padding: isMobile ? 8 : isTablet ? 12 : 16 
-                  }}>
+                  <View key={testimonial.id} style={getPracticeAreaStyle()}>
                     <View style={styles.testimonialCardWrapper}>
                        <TestimonialCard testimonial={testimonial} />
                     </View>
@@ -442,6 +469,8 @@ const styles = StyleSheet.create({
   heroTextColumnDesktop: {
     flex: 1,
     maxWidth: 768,
+    minWidth: 0, // Allow flex to work properly
+    width: 'auto',
   },
   heroTaglineContainer: {
     flexDirection: 'row',
@@ -499,12 +528,14 @@ const styles = StyleSheet.create({
     lineHeight: 30,
     marginBottom: 40,
     maxWidth: 600,
+    width: 'auto', // Allow maxWidth to work
   },
   heroDescriptionDesktop: {
     fontSize: 20,
     lineHeight: 32,
     marginBottom: 48,
     maxWidth: 600,
+    width: 'auto', // Allow maxWidth to work
   },
   heroButtonContainer: {
     flexDirection: 'row',
@@ -557,7 +588,9 @@ const styles = StyleSheet.create({
   heroWidgetColumnDesktop: {
     maxWidth: 480,
     flex: 1,
+    minWidth: 300,
     marginTop: 0,
+    width: 'auto',
   },
   heroWidgetWrapper: {
     position: 'relative',
@@ -629,6 +662,11 @@ const styles = StyleSheet.create({
   },
   missionTextColumnMobile: {
     marginBottom: 32,
+  },
+  missionTextColumnDesktop: {
+    flex: 1,
+    marginBottom: 0,
+    minWidth: 0, // Allow flex to work properly
   },
   sectionSubtitle: {
     color: '#2563eb',
@@ -730,18 +768,23 @@ const styles = StyleSheet.create({
   missionCardColumnDesktop: {
     maxWidth: 400,
     flex: 0,
+    minWidth: 300,
+    width: 'auto',
   },
   missionCard: {
-    backgroundColor: 'white',
+    backgroundColor: '#0f172a', // slate-900 - dark background for white text
     padding: 24, // Mobile padding
     borderTopWidth: 8,
     borderTopColor: '#2563eb',
+    borderWidth: 1,
+    borderColor: '#334155', // slate-700 - darker border
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 8,
     marginTop: 0, // Mobile: no negative margin
+    borderRadius: 12, // Ensure rounded corners
   },
   missionCardMobile: {
     padding: 24,
@@ -757,7 +800,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: Platform.OS === 'web' ? 'Georgia, serif' : 'serif',
     fontWeight: 'bold',
-    color: '#0f172a',
+    color: '#ffffff', // white text for dark background
     marginBottom: 24,
   },
   checkListItem: {
@@ -769,28 +812,30 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#dbeafe',
+    backgroundColor: 'rgba(37, 99, 235, 0.2)', // blue-600 with opacity for dark background
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 16,
+    flexShrink: 0,
   },
   checkDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: '#2563eb',
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: '#60a5fa', // blue-400 - lighter blue for dark background
   },
   checkListText: {
-    color: '#334155',
-    fontWeight: '500',
+    color: '#ffffff', // white text
+    fontWeight: '600', // Increased weight for better visibility
     fontSize: 18,
     flex: 1,
+    lineHeight: 26,
   },
   missionCardFooter: {
     marginTop: 32,
     paddingTop: 32,
     borderTopWidth: 1,
-    borderTopColor: '#f1f5f9',
+    borderTopColor: '#334155', // slate-700 - darker border for dark background
   },
 
   // Practice Areas
@@ -808,7 +853,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
+    marginBottom: 48, // Mobile spacing
+  },
+  practiceHeaderMobile: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    marginBottom: 48,
+  },
+  practiceHeaderDesktop: {
     marginBottom: 64,
+  },
+  practiceHeaderText: {
+    maxWidth: '100%', // Mobile: full width
+  },
+  practiceHeaderTextDesktop: {
+    maxWidth: 672,
   },
   viewAllButtonDesktop: {
     flexDirection: 'row',
@@ -829,29 +888,31 @@ const styles = StyleSheet.create({
   practiceGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginHorizontal: -8, // Mobile: smaller negative margin
-    gap: 16, // Mobile gap
+    marginHorizontal: -12, // Negative margin to offset item padding
+    alignItems: 'stretch', // Ensure cards stretch to same height
+    justifyContent: 'flex-start', // Default alignment
+    width: '100%', // Ensure full width
   },
   practiceGridTablet: {
     marginHorizontal: -12,
-    gap: 24,
   },
   practiceGridDesktop: {
-    marginHorizontal: -16,
-    gap: 24,
+    marginHorizontal: -12,
   },
   practiceCardWrapper: {
-    backgroundColor: 'white',
+    backgroundColor: '#0f172a', // slate-900 - dark background to match card
     height: '100%',
     borderRadius: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
+    shadowOpacity: 0.15,
     shadowRadius: 8,
     elevation: 3,
     borderWidth: 1,
-    borderColor: 'rgba(0, 0, 0, 0.05)', // Subtle border
+    borderColor: '#334155', // slate-700 - darker border for dark background
     overflow: 'hidden',
+    width: '100%', // Ensure full width of parent
+    flexShrink: 0, // Prevent shrinking
   },
   viewAllMobileContainer: {
     marginTop: 32,
@@ -873,10 +934,16 @@ const styles = StyleSheet.create({
   },
   testimonialsPattern: {
     position: 'absolute',
-    inset: 0,
-    opacity: 0.03,
-    // Radial gradient workaround would go here, leaving simple for StyleSheet
-    backgroundColor: '#f8fafc', 
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    opacity: 0.05,
+    backgroundColor: '#e2e8f0', // slate-200 - subtle pattern color
+    zIndex: 0,
+    // Subtle diagonal pattern effect
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(148, 163, 184, 0.1)', // slate-400 with low opacity
   },
   titleUnderline: {
     width: 96,
@@ -886,16 +953,17 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   testimonialCardWrapper: {
-    backgroundColor: 'white',
+    backgroundColor: '#0f172a', // slate-900 - dark background to match card
     borderRadius: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
+    shadowOpacity: 0.15,
     shadowRadius: 8,
     elevation: 3,
     height: '100%',
     borderWidth: 1,
-    borderColor: 'rgba(0, 0, 0, 0.05)',
+    borderColor: '#334155', // slate-700 - darker border for dark background
+    width: '100%', // Ensure full width of parent
   },
 
   // CTA
@@ -959,6 +1027,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     lineHeight: 44,
     marginBottom: 20,
+    alignSelf: 'center', // Center on desktop
   },
   ctaDescription: {
     fontSize: 16, // Mobile-first: 16px
@@ -980,6 +1049,7 @@ const styles = StyleSheet.create({
     lineHeight: 29,
     marginBottom: 40,
     maxWidth: 600,
+    alignSelf: 'center', // Center on desktop
   },
   ctaButtonRow: {
     flexDirection: 'row',

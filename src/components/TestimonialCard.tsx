@@ -39,21 +39,21 @@ const styles = StyleSheet.create({
   card: {
     marginBottom: 16,
     position: 'relative',
-    backgroundColor: 'white',
+    backgroundColor: '#0f172a', // slate-900 - dark background for white text
     borderWidth: 1,
-    borderColor: 'rgba(0, 0, 0, 0.05)',
+    borderColor: '#334155', // slate-700 - darker border for dark background
     height: '100%',
   },
   quoteIcon: {
     position: 'absolute',
     top: 24,
     left: 24,
-    opacity: 0.1,
+    opacity: 0.15,
   },
   quoteMark: {
     fontSize: 64,
     fontFamily: Platform.OS === 'web' ? 'Georgia, serif' : 'serif',
-    color: '#0f172a',
+    color: '#ffffff', // white
   },
   ratingContainer: {
     flexDirection: 'row',
@@ -61,15 +61,15 @@ const styles = StyleSheet.create({
   },
   star: {
     fontSize: 18,
-    color: '#cbd5e1',
+    color: '#475569', // slate-600 - darker gray for inactive stars
     marginRight: 4,
   },
   starActive: {
-    color: '#facc15',
+    color: '#facc15', // yellow - keep stars visible
   },
   quote: {
     fontSize: 16,
-    color: '#475569',
+    color: '#ffffff', // white text
     fontStyle: 'italic',
     marginBottom: 24,
     lineHeight: 26,
@@ -79,17 +79,17 @@ const styles = StyleSheet.create({
   footer: {
     marginTop: 'auto',
     borderTopWidth: 1,
-    borderTopColor: '#f8fafc',
+    borderTopColor: '#334155', // slate-700 - darker border for dark background
     paddingTop: 16,
   },
   author: {
     fontWeight: 'bold',
-    color: '#0f172a',
+    color: '#ffffff', // white text
     fontSize: 16,
     marginBottom: 4,
   },
   verified: {
-    color: '#64748b',
+    color: '#cbd5e1', // slate-300 - light gray for readability
     fontSize: 13,
   },
 });

@@ -16,7 +16,8 @@ export function Statistics() {
       {STATISTICS.map((stat) => (
         <View key={stat.id} style={[
           styles.statItem,
-          isMobile && styles.statItemMobile
+          isMobile && styles.statItemMobile,
+          isDesktop && styles.statItemDesktop
         ]}>
           <View style={styles.statValueContainer}>
             <Text style={[
@@ -69,6 +70,11 @@ const styles = StyleSheet.create({
   },
   statItemMobile: {
     paddingVertical: 16,
+  },
+  statItemDesktop: {
+    width: 'auto', // Desktop: auto width
+    flex: 1,
+    minWidth: 140,
   },
   statValueContainer: {
     flexDirection: 'row',

@@ -216,18 +216,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     height: 80,
+    gap: 16,
   },
   logoContainer: {
-    flex: 1,
+    flexShrink: 0,
+    minWidth: 200,
   },
   searchContainer: {
-    width: '33%',
+    flex: 1,
+    maxWidth: 400,
     marginHorizontal: 16,
+    minWidth: 200,
   },
   desktopNav: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 24,
+    flexShrink: 0,
   },
   navItemWrapper: {
     position: 'relative',
