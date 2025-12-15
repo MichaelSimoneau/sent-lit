@@ -4,14 +4,14 @@ import { STATISTICS } from '../constants/content';
 
 export function Statistics() {
   return (
-    <View className="flex-row flex-wrap justify-center gap-8 lg:gap-16">
+    <View className="flex-row flex-wrap justify-center" style={{ gap: 32 }}>
       {STATISTICS.map((stat) => (
         <View key={stat.id} className="items-center w-40">
           <View className="flex-row items-baseline mb-2">
             <Text className="text-4xl lg:text-5xl font-bold text-white font-serif">
               {stat.value}
             </Text>
-            <Text className="text-2xl font-bold text-primary-light ml-1">
+            <Text className="text-2xl font-bold text-white ml-1">
               {stat.suffix}
             </Text>
           </View>

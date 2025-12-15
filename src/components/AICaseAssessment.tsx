@@ -70,7 +70,7 @@ export function AICaseAssessment() {
     <View className="bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm p-6 lg:p-8 rounded-3xl shadow-2xl border border-white/20">
       <View className="mb-6">
         <View className="flex-row items-center mb-2">
-          <View className="w-2 h-2 rounded-full bg-green-500 animate-pulse mr-2" />
+          <View className="w-2 h-2 rounded-full bg-green-500 mr-2" />
           <Text className="text-primary font-bold uppercase tracking-wider text-xs">AI-Powered Analysis</Text>
         </View>
         <Text className="text-2xl font-serif font-bold text-slate-900 dark:text-white mb-2">

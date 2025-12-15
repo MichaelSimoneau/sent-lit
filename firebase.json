@@ -8,6 +8,30 @@
     ],
     "rewrites": [
       {
+        "source": "/_expo/static/css/**",
+        "destination": "/_expo/static/css/"
+      },
+      {
+        "source": "/_expo/static/media/**",
+        "destination": "/_expo/static/media/"
+      },
+      {
+        "source": "/_expo/static/js/**",
+        "destination": "/_expo/static/js/"
+      },
+      {
+        "source": "/_expo/static/assets/**",
+        "destination": "/_expo/static/assets/"
+      },
+      {
+        "source": "/favicon.ico",
+        "destination": "/favicon.ico"
+      },
+      {
+        "source": "/metadata.json",
+        "destination": "/metadata.json"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

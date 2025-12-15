@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "temp_app",
-    "slug": "temp_app",
+    "name": "Sentinel Litigation",
+    "slug": "sentinel-litigation",
+    "description": "Consumer fraud protection and legal advocacy",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,7 +25,16 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "name": "Sentinel Litigation",
+      "shortName": "Sentinel",
+      "description": "Leading consumer rights law firm specializing in fraud protection",
+      "themeColor": "#0f172a",
+      "backgroundColor": "#ffffff",
+      "display": "standalone",
+      "startUrl": "/",
+      "scope": "/",
+      "orientation": "portrait"
     }
   }
 }

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Platform } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, Platform, useWindowDimensions } from 'react-native';
 import { Link } from 'expo-router';
 import { Container } from './Container';
 import { NAVIGATION, COMPANY_INFO } from '../constants/content';
@@ -8,6 +8,15 @@ import { AISearch } from './AISearch';
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const { width } = useWindowDimensions();
+  const isDesktop = width >= 1024; // lg breakpoint
+
+  // Close mobile menu when switching to desktop
+  useEffect(() => {
+    if (isDesktop && isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+  }, [isDesktop, isMenuOpen]);
 
   const toggleDropdown = (title: string) => {
     if (activeDropdown === title) {
@@ -42,28 +51,50 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Search */}
-          <View className="hidden lg:flex w-1/3 mx-4">
-            <AISearch />
-          </View>
+          {isDesktop && (
+            <View style={{ width: '33%', marginHorizontal: 16 }}>
+              <AISearch />
+            </View>
+          )}
 
           {/* Desktop Nav */}
-          <View className="hidden lg:flex flex-row items-center space-x-6">
+          {isDesktop && (
+            <View className="flex-row items-center" style={{ gap: 24 }}>
             {NAVIGATION.map((item) => (
               <View key={item.title} className="relative z-10">
-                <Link href={item.href as any} asChild>
+                {item.children ? (
                   <TouchableOpacity 
                     className="py-2"
-                    onPress={() => item.children && toggleDropdown(item.title)}
-                    // onHoverIn for web could go here
+                    onPress={() => toggleDropdown(item.title)}
                   >
-                    <Text className="text-slate-700 dark:text-slate-200 font-medium hover:text-primary transition-colors">
-                      {item.title}
+                    <Text className="text-slate-700 dark:text-slate-200 font-medium">
+                      {item.title} {activeDropdown === item.title ? '▼' : '▶'}
                     </Text>
                   </TouchableOpacity>
-                </Link>
+                ) : (
+                  <Link href={item.href as any} asChild>
+                    <TouchableOpacity className="py-2" onPress={() => setActiveDropdown(null)}>
+                      <Text className="text-slate-700 dark:text-slate-200 font-medium">
+                        {item.title}
+                      </Text>
+                    </TouchableOpacity>
+                  </Link>
+                )}
                 
-                {/* Simple Dropdown for Desktop (MVP) */}
-                {/* In a full implementation, we'd use a robust popover/dropdown component */}
+                {/* Desktop Dropdown */}
+                {item.children && activeDropdown === item.title && (
+                  <View className="absolute top-full left-0 mt-2 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 min-w-48 py-2">
+                    {item.children.map((child) => (
+                      <Link key={child.title} href={child.href as any} asChild>
+                        <TouchableOpacity className="px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700">
+                          <Text className="text-slate-700 dark:text-slate-200">
+                            {child.title}
+                          </Text>
+                        </TouchableOpacity>
+                      </Link>
+                    ))}
+                  </View>
+                )}
               </View>
             ))}
             
@@ -73,23 +104,26 @@ export function Navigation() {
               </TouchableOpacity>
             </Link>
           </View>
+          )}
 
           {/* Mobile Menu Button */}
-          <TouchableOpacity 
-            className="lg:hidden p-2"
-            onPress={() => setIsMenuOpen(!isMenuOpen)}
-          >
+          {!isDesktop && (
+            <TouchableOpacity 
+              className="p-2"
+              onPress={() => setIsMenuOpen(!isMenuOpen)}
+            >
             <View className="space-y-1.5">
               <View className="w-6 h-0.5 bg-slate-800 dark:bg-white" />
               <View className="w-6 h-0.5 bg-slate-800 dark:bg-white" />
               <View className="w-6 h-0.5 bg-slate-800 dark:bg-white" />
             </View>
           </TouchableOpacity>
+          )}
         </View>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
-          <ScrollView className="lg:hidden max-h-[80vh] border-t border-slate-100 dark:border-slate-800 py-4">
+        {!isDesktop && isMenuOpen && (
+          <ScrollView className="max-h-[80vh] border-t border-slate-100 dark:border-slate-800 py-4">
             <View className="mb-6 px-4">
               <AISearch />
             </View>
@@ -101,9 +135,11 @@ export function Navigation() {
                   onPress={() => item.children ? toggleDropdown(item.title) : null}
                 >
                   <Link href={item.href as any} asChild>
-                    <Text className="text-slate-800 dark:text-white font-semibold text-lg">
-                      {item.title}
-                    </Text>
+                    <TouchableOpacity onPress={() => setIsMenuOpen(false)}>
+                      <Text className="text-slate-800 dark:text-white font-semibold text-lg">
+                        {item.title}
+                      </Text>
+                    </TouchableOpacity>
                   </Link>
                   {item.children && (
                     <Text className="text-slate-400">{activeDropdown === item.title ? '−' : '+'}</Text>
@@ -115,7 +151,10 @@ export function Navigation() {
                   <View className="bg-slate-50 dark:bg-slate-800 px-4 py-2">
                     {item.children.map((child) => (
                       <Link key={child.title} href={child.href as any} asChild>
-                        <TouchableOpacity className="py-2 pl-4 border-l-2 border-slate-200 dark:border-slate-700 ml-1">
+                        <TouchableOpacity 
+                          className="py-2 pl-4 border-l-2 border-slate-200 dark:border-slate-700 ml-1"
+                          onPress={() => setIsMenuOpen(false)}
+                        >
                           <Text className="text-slate-600 dark:text-slate-300">
                             {child.title}
                           </Text>
