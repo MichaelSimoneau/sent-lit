@@ -34,8 +34,9 @@ const getGenAI = () => {
 
 const AI_CONFIG = {
   models: {
-    text: "gemini-pro",
-    vision: "gemini-pro-vision",
+    text: "gemini-2.5-pro",
+    long_context: "gemini-3-pro-preview",
+    vision: "gemini-2.5-pro",
   },
   generationConfig: {
     temperature: 0.7,
@@ -91,7 +92,7 @@ export const assessCase = onCall(
     try {
       const ai = getGenAI();
       const model = ai.getGenerativeModel({ 
-      model: AI_CONFIG.models.text,
+      model: AI_CONFIG.models.long_context,
       generationConfig: AI_CONFIG.generationConfig,
       safetySettings: AI_CONFIG.safetySettings,
     });
@@ -107,14 +108,22 @@ export const assessCase = onCall(
       - potentialClaims (array of potential legal claims)
       - nextSteps (array of recommended actions)
       - confidenceScore (0-1 float)
+
+      RETURN RAW JSON ONLY. NO MARKDOWN. NO CODE BLOCKS.
     `;
 
     const result = await model.generateContent(prompt);
     const response = result.response;
     const text = response.text();
     
-    // Basic cleaning to ensure JSON parsing
-    const jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();
+    // Robust JSON extraction
+    let jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();
+    // If the text contains a JSON object, try to extract it
+    const jsonMatch = jsonStr.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      jsonStr = jsonMatch[0];
+    }
+    
     const assessment = JSON.parse(jsonStr);
     
     return assessment;
@@ -176,8 +185,13 @@ export const getConsumerInsight = onCall(
     const response = result.response;
     const text = response.text();
     
-    // Basic cleaning to ensure JSON parsing
-    const jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();
+    // Robust JSON extraction
+    let jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();
+    const jsonMatch = jsonStr.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      jsonStr = jsonMatch[0];
+    }
+
     const insight: ConsumerInsight = JSON.parse(jsonStr);
     
     return insight;
@@ -215,7 +229,7 @@ export const researchLegalPrecedent = onCall(
     try {
       const ai = getGenAI();
       const model = ai.getGenerativeModel({ 
-      model: AI_CONFIG.models.text,
+      model: AI_CONFIG.models.long_context,
       generationConfig: AI_CONFIG.generationConfig,
       safetySettings: AI_CONFIG.safetySettings,
     });
@@ -236,7 +250,12 @@ export const researchLegalPrecedent = onCall(
     const response = result.response;
     const text = response.text();
     
-    const jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();
+    let jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();
+    const jsonMatch = jsonStr.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      jsonStr = jsonMatch[0];
+    }
+
     const research = JSON.parse(jsonStr);
     
     return research;
