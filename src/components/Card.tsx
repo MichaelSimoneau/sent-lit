@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
     padding: 24,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
     elevation: 3,
     borderWidth: 1,
-    borderColor: '#e2e8f0', // slate-200
+    borderColor: 'rgba(0, 0, 0, 0.05)', // Subtle border for refinement
   }
 });

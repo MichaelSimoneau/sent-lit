@@ -52,19 +52,29 @@ export function Button({
   
   // Explicit fallback styles if NativeWind fails
   const getButtonStyle = () => {
-    switch(variant) {
-      case 'outline': return styles.outlineButton;
-      case 'ghost': return styles.ghostButton;
-      default: return styles.primaryButton;
-    }
+    const baseStyle = styles.base;
+    const variantStyle = variant === 'outline' ? styles.outlineButton : 
+                        variant === 'ghost' ? styles.ghostButton : 
+                        styles.primaryButton;
+    
+    // Size adjustments
+    const sizeStyle = size === 'sm' ? { paddingVertical: 8, paddingHorizontal: 16, minHeight: 36 } :
+                     size === 'lg' ? { paddingVertical: 16, paddingHorizontal: 32, minHeight: 56 } :
+                     { paddingVertical: 14, paddingHorizontal: 24, minHeight: 48 };
+    
+    return [baseStyle, variantStyle, sizeStyle];
   };
 
   const getTextStyle = () => {
-     switch(variant) {
-      case 'outline': return styles.outlineText;
-      case 'ghost': return styles.ghostText;
-      default: return styles.primaryText;
-    }
+    const variantTextStyle = variant === 'outline' ? styles.outlineText :
+                            variant === 'ghost' ? styles.ghostText :
+                            styles.primaryText;
+    
+    const sizeTextStyle = size === 'sm' ? { fontSize: 14 } :
+                         size === 'lg' ? { fontSize: 18 } :
+                         { fontSize: 16 };
+    
+    return [variantTextStyle, sizeTextStyle];
   };
 
   return (
@@ -72,9 +82,9 @@ export function Button({
       onPress={onPress}
       disabled={disabled || loading}
       style={[
-        styles.base, 
-        getButtonStyle(), 
-        style
+        ...getButtonStyle(), 
+        style,
+        (disabled || loading) && { opacity: 0.5 }
       ]}
       className={twMerge(
         baseStyles, 
@@ -85,9 +95,9 @@ export function Button({
       )}
       activeOpacity={0.7}
     >
-      {loading && <ActivityIndicator color={variant === 'outline' || variant === 'ghost' ? '#0f172a' : 'white'} className="mr-2" />}
+      {loading && <ActivityIndicator color={variant === 'outline' || variant === 'ghost' ? '#0f172a' : 'white'} style={{ marginRight: 8 }} />}
       <Text 
-        style={[getTextStyle()]}
+        style={getTextStyle()}
         className={twMerge(textStyles[variant], textSize[size])}
       >
         {title}
@@ -98,22 +108,18 @@ export function Button({
 
 const styles = StyleSheet.create({
   base: {
-    borderRadius: 8,
+    borderRadius: 12, // More modern rounded corners
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
   },
   primaryButton: {
     backgroundColor: '#2563eb', // blue-600
-    borderBottomWidth: 2,
-    borderBottomColor: '#1e3a8a', // blue-900
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowColor: '#1e3a8a',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 4,
   },
   outlineButton: {
     backgroundColor: 'transparent',
@@ -125,17 +131,20 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     color: 'white',
-    fontWeight: 'bold',
+    fontWeight: '700',
     fontSize: 16,
+    letterSpacing: 0.2,
   },
   outlineText: {
     color: '#2563eb',
-    fontWeight: 'bold',
+    fontWeight: '700',
     fontSize: 16,
+    letterSpacing: 0.2,
   },
   ghostText: {
     color: '#2563eb',
-    fontWeight: 'bold',
+    fontWeight: '700',
     fontSize: 16,
+    letterSpacing: 0.2,
   }
 });

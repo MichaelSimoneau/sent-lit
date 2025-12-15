@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
   // Hero Section
   heroSection: {
     backgroundColor: '#0f172a',
-    paddingVertical: 96,
+    paddingVertical: 120, // Increased from 96 for better breathing room
     position: 'relative',
     overflow: 'hidden',
     zIndex: 0,
@@ -336,12 +336,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   heroHeading: {
-    fontSize: 48, // lg: 7xl roughly
+    fontSize: Platform.OS === 'web' ? 64 : 48, // Larger on desktop
     fontFamily: Platform.OS === 'web' ? 'Georgia, serif' : 'serif',
     fontWeight: 'bold',
     color: 'white',
     marginBottom: 32,
-    lineHeight: 56,
+    lineHeight: Platform.OS === 'web' ? 72 : 56, // 1.125 ratio for headings
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
   },
   heroHeadingHighlight: {
     color: '#3b82f6', // blue-500
@@ -349,15 +352,17 @@ const styles = StyleSheet.create({
   heroDescription: {
     fontSize: 20,
     color: '#cbd5e1', // slate-300
-    marginBottom: 40,
-    lineHeight: 30,
+    marginBottom: 48, // Increased spacing
+    lineHeight: 32, // 1.6x line height for readability
     fontWeight: '300',
     maxWidth: 600,
+    letterSpacing: 0.2,
   },
   heroButtonContainer: {
     flexDirection: 'row',
-    gap: 16,
+    gap: 20, // Increased gap
     flexWrap: 'wrap',
+    marginBottom: 16,
   },
   heroPrimaryButton: {
     backgroundColor: '#2563eb',
@@ -418,14 +423,14 @@ const styles = StyleSheet.create({
   // Statistics Section
   statsSection: {
     backgroundColor: '#0f172a',
-    paddingVertical: 48,
+    paddingVertical: 64, // Increased padding
     borderTopWidth: 1,
     borderTopColor: '#1e293b',
   },
 
   // Mission Section
   missionSection: {
-    paddingVertical: 96,
+    paddingVertical: 120, // Increased for breathing room
     backgroundColor: '#f8fafc', // slate-50
     position: 'relative',
   },
@@ -461,19 +466,22 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   sectionTitleLight: {
-    fontSize: 36,
+    fontSize: Platform.OS === 'web' ? 42 : 36,
     fontFamily: Platform.OS === 'web' ? 'Georgia, serif' : 'serif',
     fontWeight: 'bold',
     color: '#0f172a',
-    marginBottom: 32,
-    lineHeight: 44,
+    marginBottom: 24,
+    lineHeight: Platform.OS === 'web' ? 50 : 44, // 1.2 ratio
+    letterSpacing: -0.5,
   },
   sectionTitleDark: {
-    fontSize: 36,
+    fontSize: Platform.OS === 'web' ? 42 : 36,
     fontFamily: Platform.OS === 'web' ? 'Georgia, serif' : 'serif',
     fontWeight: 'bold',
     color: '#0f172a', // dark on white
     marginBottom: 24,
+    lineHeight: Platform.OS === 'web' ? 50 : 44,
+    letterSpacing: -0.5,
   },
   textBlue: {
     color: '#2563eb',
@@ -482,12 +490,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#334155', // slate-700
     marginBottom: 24,
-    lineHeight: 28,
+    lineHeight: 29, // 1.6x for optimal readability
+    letterSpacing: 0.1,
   },
   bodyTextDark: {
     fontSize: 18,
     color: '#475569',
-    lineHeight: 28,
+    lineHeight: 29,
+    letterSpacing: 0.1,
   },
   quoteBox: {
     backgroundColor: 'white',
@@ -570,7 +580,7 @@ const styles = StyleSheet.create({
 
   // Practice Areas
   practiceSection: {
-    paddingVertical: 96,
+    paddingVertical: 120, // Increased spacing
     backgroundColor: 'white',
   },
   practiceHeader: {
@@ -605,12 +615,12 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 12,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 3,
     borderWidth: 1,
-    borderColor: '#f1f5f9',
+    borderColor: 'rgba(0, 0, 0, 0.05)', // Subtle border
     overflow: 'hidden',
   },
   viewAllMobileContainer: {
@@ -620,7 +630,7 @@ const styles = StyleSheet.create({
 
   // Testimonials
   testimonialsSection: {
-    paddingVertical: 96,
+    paddingVertical: 120, // Increased spacing
     backgroundColor: '#f8fafc',
     position: 'relative',
     overflow: 'hidden',
@@ -643,28 +653,30 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 12,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 3,
     height: '100%',
+    borderWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.05)',
   },
 
   // CTA
   ctaSection: {
-    paddingVertical: 80,
+    paddingVertical: 100, // Increased spacing
     backgroundColor: 'white',
   },
   ctaCard: {
     backgroundColor: '#0f172a',
-    borderRadius: 16,
-    padding: 48,
+    borderRadius: 20, // More rounded for modern feel
+    padding: Platform.OS === 'web' ? 64 : 48,
     textAlign: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.2,
-    shadowRadius: 20,
-    elevation: 10,
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.25,
+    shadowRadius: 24,
+    elevation: 12,
     position: 'relative',
     overflow: 'hidden',
     alignItems: 'center',
@@ -675,19 +687,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(30, 58, 138, 0.2)', // blue-900/20
   },
   ctaTitle: {
-    fontSize: 30,
+    fontSize: Platform.OS === 'web' ? 36 : 30,
     fontWeight: 'bold',
     color: 'white',
     fontFamily: Platform.OS === 'web' ? 'Georgia, serif' : 'serif',
-    marginBottom: 16,
+    marginBottom: 20,
     textAlign: 'center',
+    lineHeight: Platform.OS === 'web' ? 44 : 38,
+    letterSpacing: -0.5,
   },
   ctaDescription: {
     fontSize: 18,
     color: '#cbd5e1',
-    marginBottom: 32,
+    marginBottom: 40,
     maxWidth: 600,
     textAlign: 'center',
+    lineHeight: 29,
+    letterSpacing: 0.1,
   },
   ctaButtonRow: {
     flexDirection: 'row',

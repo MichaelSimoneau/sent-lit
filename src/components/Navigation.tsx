@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Platform, useWindowDimensions } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Platform, useWindowDimensions, StyleSheet, Dimensions } from 'react-native';
 import { Link } from 'expo-router';
 import { Container } from './Container';
 import { NAVIGATION, COMPANY_INFO } from '../constants/content';
@@ -28,51 +28,51 @@ export function Navigation() {
   };
 
   return (
-    <View className="bg-white/95 backdrop-blur-md dark:bg-slate-900/95 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50 shadow-md">
+    <View style={styles.navContainer}>
       {/* Top Bar - Phone */}
-      <View className="bg-slate-50 dark:bg-slate-950 py-1.5 border-b border-slate-100 dark:border-slate-800">
+      <View style={styles.topBar}>
         <Container>
-          <View className="flex-row justify-end items-center">
-            <Text className="text-slate-500 text-xs mr-2">Call Us Today!</Text>
-            <Text className="text-primary font-bold text-sm">{COMPANY_INFO.phone}</Text>
+          <View style={styles.topBarContent}>
+            <Text style={styles.topBarText}>Call Us Today!</Text>
+            <Text style={styles.topBarPhone}>{COMPANY_INFO.phone}</Text>
           </View>
         </Container>
       </View>
 
       <Container>
-        <View className="flex-row items-center justify-between h-20">
+        <View style={styles.navContent}>
           {/* Logo */}
           <Link href="/" asChild>
-            <TouchableOpacity className="flex-1">
+            <TouchableOpacity style={styles.logoContainer}>
               <Logo width={280} height={60} variant="wordmark" />
             </TouchableOpacity>
           </Link>
 
           {/* Desktop Search */}
           {isDesktop && (
-            <View style={{ width: '33%', marginHorizontal: 16 }}>
+            <View style={styles.searchContainer}>
               <AISearch />
             </View>
           )}
 
           {/* Desktop Nav */}
           {isDesktop && (
-            <View className="flex-row items-center" style={{ gap: 24 }}>
+            <View style={styles.desktopNav}>
             {NAVIGATION.map((item) => (
-              <View key={item.title} className="relative z-10">
+              <View key={item.title} style={styles.navItemWrapper}>
                 {item.children ? (
                   <TouchableOpacity 
-                    className="py-2"
+                    style={styles.navItem}
                     onPress={() => toggleDropdown(item.title)}
                   >
-                    <Text className="text-slate-700 dark:text-slate-200 font-medium">
+                    <Text style={styles.navItemText}>
                       {item.title} {activeDropdown === item.title ? '▼' : '▶'}
                     </Text>
                   </TouchableOpacity>
                 ) : (
                   <Link href={item.href as any} asChild>
-                    <TouchableOpacity className="py-2" onPress={() => setActiveDropdown(null)}>
-                      <Text className="text-slate-700 dark:text-slate-200 font-medium">
+                    <TouchableOpacity style={styles.navItem} onPress={() => setActiveDropdown(null)}>
+                      <Text style={styles.navItemText}>
                         {item.title}
                       </Text>
                     </TouchableOpacity>
@@ -81,11 +81,11 @@ export function Navigation() {
                 
                 {/* Desktop Dropdown */}
                 {item.children && activeDropdown === item.title && (
-                  <View className="absolute top-full left-0 mt-2 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 min-w-48 py-2">
+                  <View style={styles.dropdown}>
                     {item.children.map((child) => (
                       <Link key={child.title} href={child.href as any} asChild>
-                        <TouchableOpacity className="px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700">
-                          <Text className="text-slate-700 dark:text-slate-200">
+                        <TouchableOpacity style={styles.dropdownItem}>
+                          <Text style={styles.dropdownItemText}>
                             {child.title}
                           </Text>
                         </TouchableOpacity>
@@ -97,8 +97,8 @@ export function Navigation() {
             ))}
             
             <Link href="/contact" asChild>
-              <TouchableOpacity className="bg-primary px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
-                <Text className="text-white font-bold text-sm">Free Consultation</Text>
+              <TouchableOpacity style={styles.ctaButton}>
+                <Text style={styles.ctaButtonText}>Free Consultation</Text>
               </TouchableOpacity>
             </Link>
           </View>
@@ -107,13 +107,13 @@ export function Navigation() {
           {/* Mobile Menu Button */}
           {!isDesktop && (
             <TouchableOpacity 
-              className="p-2"
+              style={styles.menuButton}
               onPress={() => setIsMenuOpen(!isMenuOpen)}
             >
-            <View className="space-y-1.5">
-              <View className="w-6 h-0.5 bg-slate-800 dark:bg-white" />
-              <View className="w-6 h-0.5 bg-slate-800 dark:bg-white" />
-              <View className="w-6 h-0.5 bg-slate-800 dark:bg-white" />
+            <View style={styles.menuIcon}>
+              <View style={styles.menuLine} />
+              <View style={styles.menuLine} />
+              <View style={styles.menuLine} />
             </View>
           </TouchableOpacity>
           )}
@@ -121,39 +121,39 @@ export function Navigation() {
 
         {/* Mobile Menu */}
         {!isDesktop && isMenuOpen && (
-          <ScrollView className="max-h-[80vh] border-t border-slate-100 dark:border-slate-800 py-4">
-            <View className="mb-6 px-4">
+          <ScrollView style={styles.mobileMenu}>
+            <View style={styles.mobileSearchContainer}>
               <AISearch />
             </View>
             
             {NAVIGATION.map((item) => (
               <View key={item.title}>
                 <TouchableOpacity 
-                  className="py-3 px-4 flex-row justify-between items-center"
+                  style={styles.mobileNavItem}
                   onPress={() => item.children ? toggleDropdown(item.title) : null}
                 >
                   <Link href={item.href as any} asChild>
                     <TouchableOpacity onPress={() => setIsMenuOpen(false)}>
-                      <Text className="text-slate-800 dark:text-white font-semibold text-lg">
+                      <Text style={styles.mobileNavText}>
                         {item.title}
                       </Text>
                     </TouchableOpacity>
                   </Link>
                   {item.children && (
-                    <Text className="text-slate-400">{activeDropdown === item.title ? '−' : '+'}</Text>
+                    <Text style={styles.mobileNavIndicator}>{activeDropdown === item.title ? '−' : '+'}</Text>
                   )}
                 </TouchableOpacity>
                 
                 {/* Mobile Submenu */}
                 {item.children && activeDropdown === item.title && (
-                  <View className="bg-slate-50 dark:bg-slate-800 px-4 py-2">
+                  <View style={styles.mobileSubmenu}>
                     {item.children.map((child) => (
                       <Link key={child.title} href={child.href as any} asChild>
                         <TouchableOpacity 
-                          className="py-2 pl-4 border-l-2 border-slate-200 dark:border-slate-700 ml-1"
+                          style={styles.mobileSubmenuItem}
                           onPress={() => setIsMenuOpen(false)}
                         >
-                          <Text className="text-slate-600 dark:text-slate-300">
+                          <Text style={styles.mobileSubmenuText}>
                             {child.title}
                           </Text>
                         </TouchableOpacity>
@@ -164,9 +164,9 @@ export function Navigation() {
               </View>
             ))}
             
-            <View className="p-4 mt-4">
-              <TouchableOpacity className="bg-primary py-3 rounded-xl items-center">
-                <Text className="text-white font-bold text-lg">Free Consultation</Text>
+            <View style={styles.mobileCtaContainer}>
+              <TouchableOpacity style={styles.mobileCtaButton}>
+                <Text style={styles.mobileCtaText}>Free Consultation</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -175,3 +175,173 @@ export function Navigation() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  navContainer: {
+    backgroundColor: Platform.OS === 'web' ? 'rgba(255, 255, 255, 0.95)' : '#ffffff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e2e8f0',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+    position: 'relative',
+    ...(Platform.OS === 'web' && { position: 'sticky' as any, top: 0 }),
+    zIndex: 50,
+  },
+  topBar: {
+    backgroundColor: '#f8fafc',
+    paddingVertical: 6,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f1f5f9',
+  },
+  topBarContent: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  topBarText: {
+    color: '#64748b',
+    fontSize: 12,
+    marginRight: 8,
+  },
+  topBarPhone: {
+    color: '#0f172a',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  navContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 80,
+  },
+  logoContainer: {
+    flex: 1,
+  },
+  searchContainer: {
+    width: '33%',
+    marginHorizontal: 16,
+  },
+  desktopNav: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 24,
+  },
+  navItemWrapper: {
+    position: 'relative',
+    zIndex: 10,
+  },
+  navItem: {
+    paddingVertical: 8,
+  },
+  navItemText: {
+    color: '#334155',
+    fontWeight: '500',
+    fontSize: 15,
+  },
+  dropdown: {
+    position: 'absolute',
+    top: '100%',
+    left: 0,
+    marginTop: 8,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    minWidth: 192,
+    paddingVertical: 8,
+  },
+  dropdownItem: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  dropdownItemText: {
+    color: '#334155',
+    fontSize: 14,
+  },
+  ctaButton: {
+    backgroundColor: '#2563eb',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 8,
+  },
+  ctaButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  menuButton: {
+    padding: 8,
+  },
+  menuIcon: {
+    gap: 6,
+  },
+  menuLine: {
+    width: 24,
+    height: 2,
+    backgroundColor: '#1e293b',
+  },
+  mobileMenu: {
+    maxHeight: Platform.OS === 'web' ? Dimensions.get('window').height * 0.8 : undefined,
+    borderTopWidth: 1,
+    borderTopColor: '#f1f5f9',
+    paddingVertical: 16,
+  },
+  mobileSearchContainer: {
+    marginBottom: 24,
+    paddingHorizontal: 16,
+  },
+  mobileNavItem: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  mobileNavText: {
+    color: '#1e293b',
+    fontWeight: '600',
+    fontSize: 18,
+  },
+  mobileNavIndicator: {
+    color: '#94a3b8',
+  },
+  mobileSubmenu: {
+    backgroundColor: '#f8fafc',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  mobileSubmenuItem: {
+    paddingVertical: 8,
+    paddingLeft: 16,
+    borderLeftWidth: 2,
+    borderLeftColor: '#e2e8f0',
+    marginLeft: 4,
+  },
+  mobileSubmenuText: {
+    color: '#475569',
+    fontSize: 15,
+  },
+  mobileCtaContainer: {
+    padding: 16,
+    marginTop: 16,
+  },
+  mobileCtaButton: {
+    backgroundColor: '#2563eb',
+    paddingVertical: 12,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  mobileCtaText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+});
