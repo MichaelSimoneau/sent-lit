@@ -223,6 +223,12 @@ export const TESTIMONIALS: Testimonial[] = [
     author: 'Tina Adams',
     rating: 5,
   },
+  {
+    id: '4',
+    quote: 'Sentinel Litigation helped me recover damages from a fraudulent debt collection company. Their expertise in consumer protection law is unmatched, and they fought tirelessly for my rights.',
+    author: 'Michael Chen',
+    rating: 5,
+  },
 ];
 
 export const BLOG_POSTS: BlogPost[] = [
