@@ -1,11 +1,13 @@
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 import '@react-native-firebase/firestore';
+import '@react-native-firebase/functions';
 
 // Native Firebase SDK initializes automatically from native config files
 
 export const auth = firebase.auth();
 export const db = firebase.firestore();
+export const functions = firebase.functions();
 
 if (__DEV__) {
   try {
@@ -14,6 +16,7 @@ if (__DEV__) {
     
     auth.useEmulator(`http://${emulatorHost}:9099`);
     db.useEmulator(emulatorHost, 8080);
+    functions.useEmulator(emulatorHost, 5001);
     console.log('Connected to Native Firebase Emulators');
   } catch (e) {
      // Ignore if already connected

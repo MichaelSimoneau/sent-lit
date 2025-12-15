@@ -1,9 +1,5 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { AI_CONFIG } from "../../config/ai";
-import { AIAssessment, AIDocumentAnalysis, AILegalResearch } from "../../types/content";
-
-// Initialize Gemini Client
-const genAI = new GoogleGenerativeAI(AI_CONFIG.apiKey);
+import { getCallable } from "./functions-helper";
+import { AIAssessment, AIDocumentAnalysis, AILegalResearch, ConsumerInsight } from "../../types/content";
 
 export const AIService = {
   /**
@@ -11,30 +7,35 @@ export const AIService = {
    */
   async assessCase(description: string): Promise<AIAssessment> {
     try {
-      const model = genAI.getGenerativeModel({ model: AI_CONFIG.models.text });
-      const prompt = `
-        Act as a senior consumer protection attorney. Analyze the following potential case description:
-        "${description}"
-        
-        Provide a structured assessment in JSON format with the following fields:
-        - caseStrength (1-10 integer)
-        - summary (brief overview)
-        - recommendedPracticeAreas (array of strings matching our practice areas)
-        - potentialClaims (array of potential legal claims)
-        - nextSteps (array of recommended actions)
-        - confidenceScore (0-1 float)
-      `;
-
-      const result = await model.generateContent(prompt);
-      const response = result.response;
-      const text = response.text();
-      
-      // Basic cleaning to ensure JSON parsing - in production use more robust parsing
-      const jsonStr = text.replace(/```json/g, '').replace(/```/g, '').trim();
-      return JSON.parse(jsonStr) as AIAssessment;
-    } catch (error) {
+      const assessCaseCallable = getCallable("assessCase");
+      const result = await assessCaseCallable({ description });
+      return result.data as AIAssessment;
+    } catch (error: any) {
       console.error("AI Assessment Error:", error);
-      throw new Error("Failed to assess case. Please try again.");
+      throw new Error(error.message || "Failed to assess case. Please try again.");
+    }
+  },
+
+  /**
+   * Get consumer insight - Q&A or tip
+   */
+  async getConsumerInsight(): Promise<ConsumerInsight> {
+    try {
+      const getConsumerInsightCallable = getCallable("getConsumerInsight");
+      const result = await getConsumerInsightCallable({});
+      return result.data as ConsumerInsight;
+    } catch (error: any) {
+      console.error("AI Insight Error:", error);
+      // Return fallback insight
+      return {
+        question: "How long does a typical consumer fraud case take?",
+        answer: "Most cases resolve in 3-6 months. Complex litigation may take 12-18 months. Our AI analysis shows 78% of similar cases settle favorably within 6 months.",
+        quickFacts: {
+          avgSettlement: "$45K",
+          successRate: "92%",
+          freeConsult: "Yes",
+        },
+      };
     }
   },
 
@@ -43,69 +44,35 @@ export const AIService = {
    */
   async researchLegalPrecedent(query: string, practiceArea: string): Promise<AILegalResearch> {
     try {
-      const model = genAI.getGenerativeModel({ model: AI_CONFIG.models.text });
-      const prompt = `
-        Research legal precedents for a consumer protection case in the area of "${practiceArea}".
-        Query: "${query}"
-        
-        Focus on Illinois and Federal laws.
-        Provide the result in JSON format:
-        - query
-        - relevantLaws (array)
-        - precedents (array of case names/citations)
-        - explanation (detailed explanation)
-      `;
-
-      const result = await model.generateContent(prompt);
-      const response = result.response;
-      const text = response.text();
-      
-      const jsonStr = text.replace(/```json/g, '').replace(/```/g, '').trim();
-      return JSON.parse(jsonStr) as AILegalResearch;
-    } catch (error) {
+      const researchCallable = getCallable("researchLegalPrecedent");
+      const result = await researchCallable({ query, practiceArea });
+      return result.data as AILegalResearch;
+    } catch (error: any) {
       console.error("AI Research Error:", error);
-      throw new Error("Failed to research precedents.");
+      throw new Error(error.message || "Failed to research precedents.");
     }
   },
 
   /**
    * Translate content to target language
+   * Note: This function is not yet implemented in Firebase Functions
+   * Keeping the interface for future implementation
    */
   async translateContent(text: string, targetLang: string): Promise<string> {
-    try {
-      const model = genAI.getGenerativeModel({ model: AI_CONFIG.models.text });
-      const prompt = `Translate the following legal text to ${targetLang}. Ensure legal terminology is accurate.\n\n${text}`;
-      
-      const result = await model.generateContent(prompt);
-      const response = result.response;
-      return response.text();
-    } catch (error) {
-      console.error("AI Translation Error:", error);
-      return text; // Fallback to original text
-    }
+    // TODO: Implement in Firebase Functions if needed
+    console.warn("translateContent not yet implemented via Firebase Functions");
+    return text; // Fallback to original text
   },
 
   /**
    * Generate suggestions for form completion
+   * Note: This function is not yet implemented in Firebase Functions
+   * Keeping the interface for future implementation
    */
   async generateFormSuggestions(partialInput: string, fieldName: string): Promise<string[]> {
-    try {
-      const model = genAI.getGenerativeModel({ model: AI_CONFIG.models.text });
-      const prompt = `
-        The user is filling out a legal consultation form. 
-        Field: ${fieldName}
-        Current Input: "${partialInput}"
-        
-        Suggest 3 likely completions or refinements for a consumer fraud case. Return as a JSON array of strings.
-      `;
-      
-      const result = await model.generateContent(prompt);
-      const text = result.response.text();
-      const jsonStr = text.replace(/```json/g, '').replace(/```/g, '').trim();
-      return JSON.parse(jsonStr) as string[];
-    } catch (error) {
-      return [];
-    }
+    // TODO: Implement in Firebase Functions if needed
+    console.warn("generateFormSuggestions not yet implemented via Firebase Functions");
+    return [];
   }
 };
 

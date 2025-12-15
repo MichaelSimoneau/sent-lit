@@ -81,3 +81,13 @@ export interface AILegalResearch {
   }>;
   summary: string;
 }
+
+export interface ConsumerInsight {
+  question: string;
+  answer: string;
+  quickFacts?: {
+    avgSettlement?: string;
+    successRate?: string;
+    freeConsult?: string;
+  };
+}

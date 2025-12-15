@@ -8,6 +8,7 @@ import { Button } from '../src/components/Button';
 import { Card } from '../src/components/Card';
 import { Statistics } from '../src/components/Statistics';
 import { AICaseAssessment } from '../src/components/AICaseAssessment';
+import { AIInsightsWidget } from '../src/components/AIInsightsWidget';
 import { PracticeAreaCard } from '../src/components/PracticeAreaCard';
 import { TestimonialCard } from '../src/components/TestimonialCard';
 import { HERO_CONTENT, PRACTICE_AREAS, TESTIMONIALS } from '../src/constants/content';
@@ -329,6 +330,9 @@ export default function Home() {
             </View>
             
             <Container style={{ position: 'relative', zIndex: 10 }}>
+              {/* AI Anticipatory Widget */}
+              <AIInsightsWidget />
+              
               <View style={{ alignItems: 'center', marginBottom: 64 }}>
                 <Text style={styles.sectionSubtitle}>Client Success</Text>
                 <Text style={[
@@ -983,7 +987,8 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(37, 99, 235, 0.02)',
+    backgroundColor: 'rgba(37, 99, 235, 0.04)',
+    zIndex: 1,
   },
   aiShape1: {
     position: 'absolute',
@@ -992,15 +997,19 @@ const styles = StyleSheet.create({
     width: 140,
     height: 140,
     borderRadius: 24,
-    backgroundColor: 'rgba(37, 99, 235, 0.06)',
+    backgroundColor: 'rgba(37, 99, 235, 0.15)',
     transform: [{ rotate: '45deg' }],
-    borderWidth: 2.5,
-    borderColor: 'rgba(37, 99, 235, 0.2)',
+    borderWidth: 3,
+    borderColor: 'rgba(37, 99, 235, 0.4)',
     shadowColor: '#2563eb',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 4,
+    zIndex: 2,
+    ...(Platform.OS === 'web' && {
+      boxShadow: '0 6px 12px rgba(37, 99, 235, 0.3)',
+    } as any),
   },
   aiShape2: {
     position: 'absolute',
@@ -1009,14 +1018,18 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: 'rgba(96, 165, 250, 0.08)',
-    borderWidth: 2.5,
-    borderColor: 'rgba(96, 165, 250, 0.25)',
+    backgroundColor: 'rgba(96, 165, 250, 0.2)',
+    borderWidth: 3,
+    borderColor: 'rgba(96, 165, 250, 0.5)',
     shadowColor: '#60a5fa',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 4,
+    zIndex: 2,
+    ...(Platform.OS === 'web' && {
+      boxShadow: '0 6px 12px rgba(96, 165, 250, 0.25)',
+    } as any),
   },
   aiShape3: {
     position: 'absolute',
@@ -1025,15 +1038,19 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 16,
-    backgroundColor: 'rgba(59, 130, 246, 0.07)',
+    backgroundColor: 'rgba(59, 130, 246, 0.18)',
     transform: [{ rotate: '-30deg' }],
-    borderWidth: 2,
-    borderColor: 'rgba(59, 130, 246, 0.22)',
+    borderWidth: 2.5,
+    borderColor: 'rgba(59, 130, 246, 0.45)',
     shadowColor: '#3b82f6',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    elevation: 1,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 3,
+    zIndex: 2,
+    ...(Platform.OS === 'web' && {
+      boxShadow: '0 4px 8px rgba(59, 130, 246, 0.2)',
+    } as any),
   },
   aiShape4: {
     position: 'absolute',
@@ -1042,40 +1059,56 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 8,
-    backgroundColor: 'rgba(37, 99, 235, 0.05)',
+    backgroundColor: 'rgba(37, 99, 235, 0.15)',
     transform: [{ rotate: '20deg' }],
-    borderWidth: 1.5,
-    borderColor: 'rgba(37, 99, 235, 0.18)',
+    borderWidth: 2,
+    borderColor: 'rgba(37, 99, 235, 0.4)',
+    zIndex: 2,
+    ...(Platform.OS === 'web' && {
+      boxShadow: '0 2px 4px rgba(37, 99, 235, 0.2)',
+    } as any),
   },
   aiAccentLine1: {
     position: 'absolute',
     top: '22%',
     left: '5%',
     width: '35%',
-    height: 2.5,
-    backgroundColor: 'rgba(37, 99, 235, 0.15)',
+    height: 3,
+    backgroundColor: 'rgba(37, 99, 235, 0.3)',
     transform: [{ rotate: '-8deg' }],
     borderRadius: 2,
+    zIndex: 2,
+    ...(Platform.OS === 'web' && {
+      boxShadow: '0 2px 4px rgba(37, 99, 235, 0.2)',
+    } as any),
   },
   aiAccentLine2: {
     position: 'absolute',
     bottom: '28%',
     left: '35%',
     width: '40%',
-    height: 2.5,
-    backgroundColor: 'rgba(96, 165, 250, 0.12)',
+    height: 3,
+    backgroundColor: 'rgba(96, 165, 250, 0.25)',
     transform: [{ rotate: '10deg' }],
     borderRadius: 2,
+    zIndex: 2,
+    ...(Platform.OS === 'web' && {
+      boxShadow: '0 2px 4px rgba(96, 165, 250, 0.2)',
+    } as any),
   },
   aiAccentLine3: {
     position: 'absolute',
     top: '55%',
     right: '12%',
     width: '25%',
-    height: 2,
-    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+    height: 2.5,
+    backgroundColor: 'rgba(59, 130, 246, 0.25)',
     transform: [{ rotate: '-15deg' }],
     borderRadius: 2,
+    zIndex: 2,
+    ...(Platform.OS === 'web' && {
+      boxShadow: '0 2px 4px rgba(59, 130, 246, 0.2)',
+    } as any),
   },
   titleUnderline: {
     width: 96,
@@ -1200,5 +1233,139 @@ const styles = StyleSheet.create({
   ctaSecondaryButton: {
     borderColor: 'white',
     backgroundColor: 'transparent',
+  },
+  // AI Anticipatory Insight Card
+  aiInsightCard: {
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
+    padding: 24,
+    marginBottom: 48,
+    marginHorizontal: 0,
+    borderWidth: 3,
+    borderColor: '#2563eb',
+    borderStyle: 'solid',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 24,
+    elevation: 15,
+    position: 'relative',
+    overflow: 'visible',
+    width: '100%',
+    ...(Platform.OS === 'web' && {
+      boxShadow: '0 8px 24px rgba(37, 99, 235, 0.35), 0 0 0 3px rgba(37, 99, 235, 0.2)',
+    } as any),
+  },
+  aiInsightCardMobile: {
+    padding: 16,
+    marginBottom: 32,
+  },
+  aiInsightCardDesktop: {
+    padding: 28,
+    maxWidth: 800,
+    alignSelf: 'center',
+  },
+  aiInsightHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+    ...(Platform.OS === 'web' ? { gap: 12 } : {}),
+  },
+  aiPulseIndicator: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: '#10b981',
+    borderWidth: 2,
+    borderColor: '#ffffff',
+    shadowColor: '#10b981',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 12,
+    elevation: 4,
+    ...(Platform.OS === 'web' && {
+      boxShadow: '0 0 12px rgba(16, 185, 129, 0.8), 0 0 0 2px rgba(255, 255, 255, 1)',
+    }),
+  },
+  aiInsightTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#0f172a',
+    flex: 1,
+    letterSpacing: 0.5,
+  },
+  aiBadge: {
+    backgroundColor: '#2563eb',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#1e40af',
+    ...(Platform.OS === 'web' && {
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+    }),
+  },
+  aiBadgeText: {
+    color: 'white',
+    fontSize: 10,
+    fontWeight: 'bold',
+    letterSpacing: 1,
+  },
+  aiInsightContent: {
+    ...(Platform.OS === 'web' ? { gap: 12 } : {}),
+  },
+  aiInsightQuestion: {
+    fontSize: 14,
+    color: '#64748b',
+    fontStyle: 'italic',
+    fontWeight: '500',
+  },
+  aiInsightAnswer: {
+    fontSize: 16,
+    color: '#0f172a',
+    fontWeight: '600',
+    lineHeight: 24,
+  },
+  aiInsightDivider: {
+    height: 1,
+    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+    marginVertical: 4,
+  },
+  aiInsightResponse: {
+    fontSize: 15,
+    color: '#475569',
+    lineHeight: 22,
+    fontWeight: '400',
+  },
+  aiQuickFacts: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 8,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(37, 99, 235, 0.1)',
+  },
+  aiQuickFact: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  aiQuickFactLabel: {
+    fontSize: 11,
+    color: '#64748b',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginBottom: 4,
+    fontWeight: '600',
+  },
+  aiQuickFactValue: {
+    fontSize: 20,
+    color: '#2563eb',
+    fontWeight: 'bold',
+  },
+  aiQuickFactDivider: {
+    width: 1,
+    height: 40,
+    backgroundColor: 'rgba(37, 99, 235, 0.15)',
+    marginHorizontal: 12,
   },
 });
