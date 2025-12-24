@@ -45,37 +45,39 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
   };
 
   return (
-    <Card style={styles.card}>
-       {/* Quote Icon */}
-       <View style={styles.quoteIcon}>
-        <Text style={styles.quoteMark}>"</Text>
-      </View>
+    <Card style={styles.card} className="!p-0">
+      <View style={styles.cardContent}>
+        {/* Quote Icon */}
+        <View style={styles.quoteIcon}>
+          <Text style={styles.quoteMark}>"</Text>
+        </View>
 
-      <View style={styles.ratingContainer}>
-        {[...Array(5)].map((_, i) => (
-          <Text key={i} style={[
-            styles.star,
-            i < testimonial.rating && styles.starActive
-          ]}>★</Text>
-        ))}
-      </View>
-      
-      <Text style={styles.quote}>
-        "{testimonial.quote}"
-      </Text>
-      
-      <View style={styles.footer}>
-        <Text style={styles.author}>- {testimonial.author}</Text>
-        <Text style={styles.verified}>Verified Client</Text>
-        <View style={styles.linksContainer}>
-          <TouchableOpacity onPress={handleCopyLink} style={styles.link}>
-            <Text style={styles.linkText}>🔗 Share Link</Text>
-          </TouchableOpacity>
-          {testimonial.sourceUrl && (
-            <TouchableOpacity onPress={handleSourceLink} style={styles.link}>
-              <Text style={styles.linkText}>View Original →</Text>
+        <View style={styles.ratingContainer}>
+          {[...Array(5)].map((_, i) => (
+            <Text key={i} style={[
+              styles.star,
+              i < testimonial.rating && styles.starActive
+            ]}>★</Text>
+          ))}
+        </View>
+        
+        <Text style={styles.quote}>
+          {testimonial.quote}
+        </Text>
+        
+        <View style={styles.footer}>
+          <Text style={styles.author}>- {testimonial.author}</Text>
+          <Text style={styles.verified}>Verified Client</Text>
+          <View style={styles.linksContainer}>
+            <TouchableOpacity onPress={handleCopyLink} style={styles.link}>
+              <Text style={styles.linkText}>🔗 Share Link</Text>
             </TouchableOpacity>
-          )}
+            {testimonial.sourceUrl && (
+              <TouchableOpacity onPress={handleSourceLink} style={styles.link}>
+                <Text style={styles.linkText}>View Original →</Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       </View>
     </Card>
@@ -90,12 +92,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#334155', // slate-700 - darker border for dark background
     height: '100%',
+    padding: 0, // Remove default padding to use our own
+    overflow: 'hidden', // Ensure content doesn't overflow
+    borderRadius: 12, // Match Card component
+  },
+  cardContent: {
+    flex: 1,
+    padding: 24,
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   quoteIcon: {
     position: 'absolute',
     top: 24,
     left: 24,
     opacity: 0.15,
+    zIndex: 1,
   },
   quoteMark: {
     fontSize: 64,
@@ -105,6 +119,8 @@ const styles = StyleSheet.create({
   ratingContainer: {
     flexDirection: 'row',
     marginBottom: 16,
+    zIndex: 2,
+    position: 'relative',
   },
   star: {
     fontSize: 18,
@@ -116,12 +132,14 @@ const styles = StyleSheet.create({
   },
   quote: {
     fontSize: 16,
-    color: '#ffffff', // white text
+    color: '#ffffff', // white text - EXPLICIT white color
     fontStyle: 'italic',
-    marginBottom: 24,
+    fontFamily: Platform.OS === 'web' ? 'Georgia, serif' : 'serif',
     lineHeight: 26,
+    marginBottom: 24,
+    marginTop: 8,
     position: 'relative',
-    zIndex: 10,
+    zIndex: 2,
   },
   footer: {
     marginTop: 'auto',
