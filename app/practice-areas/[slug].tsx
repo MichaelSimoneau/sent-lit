@@ -107,6 +107,7 @@ export default function PracticeAreaDetail() {
       <SEOHead 
         title={`${practiceArea.title} | Sentinel Litigation`}
         description={practiceArea.fullDescription || practiceArea.shortDescription}
+        url={`/practice-areas/${slug}`}
       />
       <Stack.Screen options={{ title: practiceArea.title }} />
       <View style={styles.pageContainer}>

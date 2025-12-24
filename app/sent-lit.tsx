@@ -17,6 +17,7 @@ export default function SentLit() {
       <SEOHead 
         title="Sent Lit | Sentinel Litigation - Get Legal Advice When You Need It"
         description="Feeling a little buzzed and need legal advice? Tell us about your situation and we'll assess your case's potential immediately."
+        url="/sent-lit"
       />
       <Stack.Screen options={{ title: 'Sent Lit', headerShown: false }} />
       <View style={styles.pageContainer}>

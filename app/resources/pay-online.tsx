@@ -4,6 +4,7 @@ import { Stack } from 'expo-router';
 import { Container } from '../../src/components/Container';
 import { Navigation } from '../../src/components/Navigation';
 import { Footer } from '../../src/components/Footer';
+import { SEOHead } from '../../src/components/SEOHead';
 import { Card } from '../../src/components/Card';
 import { Button } from '../../src/components/Button';
 
@@ -14,6 +15,11 @@ export default function PayOnline() {
 
   return (
     <>
+      <SEOHead 
+        title="Pay Online | Sentinel Litigation"
+        description="Make a secure online payment for your case or account with Sentinel Litigation."
+        url="/resources/pay-online"
+      />
       <Stack.Screen options={{ title: 'Pay Online' }} />
       <View className="flex-1 bg-white dark:bg-slate-900">
         <Navigation />

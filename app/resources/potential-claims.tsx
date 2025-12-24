@@ -4,6 +4,7 @@ import { Stack } from 'expo-router';
 import { Container } from '../../src/components/Container';
 import { Navigation } from '../../src/components/Navigation';
 import { Footer } from '../../src/components/Footer';
+import { SEOHead } from '../../src/components/SEOHead';
 import { Card } from '../../src/components/Card';
 import { Button } from '../../src/components/Button';
 import { PRACTICE_AREAS } from '../../src/constants/content';
@@ -71,6 +72,11 @@ export default function PotentialClaims() {
 
   return (
     <>
+      <SEOHead 
+        title="Potential Claims Assessment | Sentinel Litigation"
+        description="Use our interactive tool to assess if you have a potential consumer protection claim. Free and confidential evaluation."
+        url="/resources/potential-claims"
+      />
       <Stack.Screen options={{ title: 'Potential Claims' }} />
       <View className="flex-1 bg-white dark:bg-slate-900">
         <Navigation />

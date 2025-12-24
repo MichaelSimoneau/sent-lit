@@ -4,6 +4,7 @@ import { Stack } from 'expo-router';
 import { Container } from '../src/components/Container';
 import { Footer } from '../src/components/Footer';
 import { Navigation } from '../src/components/Navigation';
+import { SEOHead } from '../src/components/SEOHead';
 import { ConsultationForm } from '../src/components/ConsultationForm';
 import { COMPANY_INFO } from '../src/constants/content';
 import { Card } from '../src/components/Card';
@@ -11,6 +12,11 @@ import { Card } from '../src/components/Card';
 export default function Contact() {
   return (
     <>
+      <SEOHead 
+        title="Contact Us | Sentinel Litigation"
+        description="Get in touch with our consumer protection legal team. Free consultations available. Located in Chicago, Illinois."
+        url="/contact"
+      />
       <Stack.Screen options={{ title: 'Contact Us', headerShown: false }} />
       <View className="flex-1 bg-white dark:bg-slate-900">
         <Navigation />

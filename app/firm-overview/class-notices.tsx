@@ -35,6 +35,7 @@ export default function ClassNotices() {
       <SEOHead 
         title="Class Notices | Sentinel Litigation"
         description="View active and pending class action notices and settlement information from Sentinel Litigation cases."
+        url="/firm-overview/class-notices"
       />
       <Stack.Screen options={{ title: 'Class Notices' }} />
       <View style={styles.pageContainer}>

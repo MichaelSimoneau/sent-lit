@@ -18,6 +18,7 @@ export default function FirmOverview() {
       <SEOHead 
         title="Firm Overview | Sentinel Litigation - Consumer Protection Attorneys"
         description="Founded by David Rodriguez, a DePaul University College of Law professor, Sentinel Litigation specializes in consumer fraud and consumer rights protection."
+        url="/firm-overview"
       />
       <Stack.Screen options={{ title: 'Firm Overview' }} />
       <View style={styles.pageContainer}>

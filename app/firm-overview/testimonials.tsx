@@ -51,6 +51,7 @@ export default function Testimonials() {
       <SEOHead 
         title="Client Testimonials | Sentinel Litigation"
         description="Read what our clients say about their experience with Sentinel Litigation in consumer protection cases."
+        url="/firm-overview/testimonials"
       />
       <Stack.Screen options={{ title: 'Testimonials' }} />
       <View style={styles.pageContainer}>

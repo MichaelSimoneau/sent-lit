@@ -67,6 +67,7 @@ export default function CaseResults() {
       <SEOHead 
         title="Case Results | Sentinel Litigation"
         description="See our track record of successful consumer protection cases and recoveries for clients."
+        url="/firm-overview/case-results"
       />
       <Stack.Screen options={{ title: 'Case Results' }} />
       <View style={styles.pageContainer}>

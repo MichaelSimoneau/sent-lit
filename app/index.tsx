@@ -79,6 +79,7 @@ export default function Home() {
       <SEOHead 
         title="Sentinel Litigation | Consumer Fraud Protection"
         description={HERO_CONTENT.description}
+        url="/"
       />
       <Stack.Screen options={{ title: 'Home', headerShown: false }} />
       <View style={styles.pageContainer}>

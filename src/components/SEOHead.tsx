@@ -11,6 +11,12 @@ interface SEOHeadProps {
   type?: string;
 }
 
+// Helper to truncate description for social media (max 200 chars recommended)
+const truncateDescription = (desc: string, maxLength: number = 200): string => {
+  if (desc.length <= maxLength) return desc;
+  return desc.substring(0, maxLength - 3).trim() + '...';
+};
+
 export const SEOHead = ({ 
   title = 'Sentinel Litigation | Consumer Fraud Protection', 
   description = 'Leading consumer rights law firm specializing in fraud protection.', 
@@ -49,17 +55,25 @@ export const SEOHead = ({
   }
   
   const fullTitle = title.includes('Sentinel') ? title : `${title} | Sentinel Litigation`;
+  // Truncate descriptions for optimal social media display
+  const metaDescription = truncateDescription(description, 160); // Meta description limit
+  const ogDescription = truncateDescription(description, 200); // Open Graph limit
   
   return (
     <Head>
       <title>{fullTitle}</title>
-      <meta name="description" content={description} />
+      <meta name="description" content={metaDescription} />
       <link rel="canonical" href={fullUrl} />
       
       {/* Open Graph */}
       <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description} />
+      <meta property="og:description" content={ogDescription} />
       <meta property="og:image" content={imageUrl} />
+      <meta property="og:image:secure_url" content={imageUrl} />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={fullTitle} />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:type" content={type} />
       <meta property="og:site_name" content="Sentinel Litigation" />
@@ -68,8 +82,9 @@ export const SEOHead = ({
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={description} />
+      <meta name="twitter:description" content={ogDescription} />
       <meta name="twitter:image" content={imageUrl} />
+      <meta name="twitter:image:alt" content={fullTitle} />
     </Head>
   );
 };
