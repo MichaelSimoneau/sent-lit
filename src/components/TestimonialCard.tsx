@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import { View, Text, StyleSheet, Platform, TouchableOpacity, Linking } from 'react-native';
 import { Card } from './Card';
 import { Testimonial } from '../types/content';
 
@@ -7,6 +7,12 @@ interface TestimonialCardProps {
 }
 
 export function TestimonialCard({ testimonial }: TestimonialCardProps) {
+  const handleSourceLink = () => {
+    if (testimonial.sourceUrl) {
+      Linking.openURL(testimonial.sourceUrl);
+    }
+  };
+
   return (
     <Card style={styles.card}>
        {/* Quote Icon */}
@@ -30,6 +36,11 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
       <View style={styles.footer}>
         <Text style={styles.author}>- {testimonial.author}</Text>
         <Text style={styles.verified}>Verified Client</Text>
+        {testimonial.sourceUrl && (
+          <TouchableOpacity onPress={handleSourceLink} style={styles.sourceLink}>
+            <Text style={styles.sourceLinkText}>View Original Testimonial →</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </Card>
   );
@@ -91,5 +102,16 @@ const styles = StyleSheet.create({
   verified: {
     color: '#cbd5e1', // slate-300 - light gray for readability
     fontSize: 13,
+  },
+  sourceLink: {
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#334155',
+  },
+  sourceLinkText: {
+    color: '#60a5fa', // blue-400
+    fontSize: 13,
+    fontWeight: '600',
   },
 });

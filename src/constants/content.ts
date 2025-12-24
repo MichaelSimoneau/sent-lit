@@ -230,6 +230,13 @@ export const TESTIMONIALS: Testimonial[] = [
     author: 'Michael Chen',
     rating: 5,
   },
+  {
+    id: '5',
+    quote: 'Working with David Rodriguez reminds me of Tom Hagen, the consigliere from The Godfather—calm, strategic, and absolutely unshakeable when protecting his clients. Like Hagen served the Corleone family with unwavering loyalty and legal brilliance, David protects consumers with the same level of dedication and expertise. He\'s the kind of attorney you want in your corner when facing down powerful corporations.',
+    author: 'Michael Simoneau',
+    rating: 5,
+    sourceUrl: 'https://MichaelSimoneau.com/#testimonials',
+  },
 ];
 
 export const BLOG_POSTS: BlogPost[] = [

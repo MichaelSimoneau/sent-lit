@@ -34,6 +34,7 @@ export interface Testimonial {
   author: string;
   rating: number;
   location?: string;
+  sourceUrl?: string;
 }
 
 export interface Statistic {
