@@ -59,7 +59,7 @@ export default function AttorneyDetail() {
                       {attorney.name.split(' ').map((n) => n[0]).join('')}
                     </Text>
                   </View>
-                  <Text className="text-2xl font-bold text-primary dark:text-white mb-2 text-center">
+                  <Text className="text-2xl font-bold text-slate-900 dark:text-white mb-2 text-center">
                     {attorney.name}
                   </Text>
                   <Text className="text-lg text-slate-600 dark:text-slate-300 mb-6 text-center">
@@ -81,7 +81,7 @@ export default function AttorneyDetail() {
 
               {/* Bio and Details */}
               <View className="flex-1">
-                <Text className="text-3xl font-bold text-primary dark:text-white mb-6 font-serif">
+                <Text className="text-3xl font-bold text-slate-900 dark:text-white mb-6 font-serif">
                   Biography
                 </Text>
                 <Text className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed mb-8">

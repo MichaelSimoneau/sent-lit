@@ -76,7 +76,7 @@ export default function PotentialClaims() {
         <Navigation />
         <ScrollView>
           <Container className="py-12">
-            <Text className="text-3xl font-bold text-primary dark:text-white mb-4 font-serif">
+            <Text className="text-3xl font-bold text-slate-900 dark:text-white mb-4 font-serif">
               Do You Have a Potential Claim?
             </Text>
             <Text className="text-lg text-slate-600 dark:text-slate-300 mb-8">
@@ -118,7 +118,7 @@ export default function PotentialClaims() {
             ) : (
               <View>
                 <Card className="p-8 mb-6">
-                  <Text className="text-2xl font-bold text-primary dark:text-white mb-4">
+                  <Text className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
                     Based on Your Answers
                   </Text>
                   <Text className="text-lg text-slate-600 dark:text-slate-300 mb-6">

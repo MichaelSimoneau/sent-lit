@@ -12,7 +12,7 @@ export default function PracticeAreas() {
         <Navigation />
         <ScrollView>
           <Container className="py-12">
-            <Text className="text-3xl font-bold text-primary dark:text-white mb-6">
+            <Text className="text-3xl font-bold text-slate-900 dark:text-white mb-6">
               Practice Areas
             </Text>
             <Text className="text-lg text-slate-600 dark:text-slate-300">
