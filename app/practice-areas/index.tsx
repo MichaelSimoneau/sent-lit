@@ -3,10 +3,16 @@ import { Stack } from 'expo-router';
 import { Container } from '../../src/components/Container';
 import { Navigation } from '../../src/components/Navigation';
 import { Footer } from '../../src/components/Footer';
+import { SEOHead } from '../../src/components/SEOHead';
 
 export default function PracticeAreas() {
   return (
     <>
+      <SEOHead 
+        title="Practice Areas | Sentinel Litigation"
+        description="Expert consumer protection attorneys specializing in credit reporting, debt collection, unfair auto financing, and biometric privacy cases."
+        url="/practice-areas"
+      />
       <Stack.Screen options={{ title: 'Practice Areas' }} />
       <View className="flex-1 bg-white dark:bg-slate-900">
         <Navigation />

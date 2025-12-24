@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     color: '#0f172a',
-    fontSize: 15,
+    fontSize: 16, // 16px prevents iOS auto-zoom on input focus
     marginRight: 8,
     paddingVertical: Platform.OS === 'web' ? 4 : 0,
     ...(Platform.OS === 'web' && { outlineStyle: 'none' as any }),

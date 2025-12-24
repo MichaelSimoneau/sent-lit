@@ -6,6 +6,11 @@ export function getWebsiteUrl(): string {
   if (typeof window !== 'undefined') {
     const hostname = window.location.hostname;
     
+    // Check if we're on sentlit.com
+    if (hostname.includes('sentlit.com')) {
+      return 'https://sentlit.com';
+    }
+    
     // Check if we're on sentinellegal.us
     if (hostname.includes('sentinellegal.us')) {
       return 'https://sentinellegal.us';

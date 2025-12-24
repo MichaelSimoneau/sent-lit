@@ -3,6 +3,7 @@ import { Stack, useLocalSearchParams, Link } from 'expo-router';
 import { Container } from '../../src/components/Container';
 import { Navigation } from '../../src/components/Navigation';
 import { Footer } from '../../src/components/Footer';
+import { SEOHead } from '../../src/components/SEOHead';
 import { Card } from '../../src/components/Card';
 import { Button } from '../../src/components/Button';
 import { ATTORNEYS, PRACTICE_AREAS } from '../../src/constants/content';
@@ -37,6 +38,11 @@ export default function AttorneyDetail() {
 
   return (
     <>
+      <SEOHead 
+        title={`${attorney.name} - ${attorney.title} | Sentinel Litigation`}
+        description={attorney.bio || `${attorney.name}, ${attorney.title} at Sentinel Litigation.`}
+        url={`/attorneys/${attorney.slug}`}
+      />
       <Stack.Screen options={{ title: attorney.name }} />
       <View className="flex-1 bg-white dark:bg-slate-900">
         <Navigation />

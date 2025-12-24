@@ -3,12 +3,18 @@ import { Stack, Link } from 'expo-router';
 import { Container } from '../../src/components/Container';
 import { Navigation } from '../../src/components/Navigation';
 import { Footer } from '../../src/components/Footer';
+import { SEOHead } from '../../src/components/SEOHead';
 import { AttorneyCard } from '../../src/components/AttorneyCard';
 import { ATTORNEYS } from '../../src/constants/content';
 
 export default function Attorneys() {
   return (
     <>
+      <SEOHead 
+        title="Our Attorneys | Sentinel Litigation"
+        description="Experienced consumer protection attorneys dedicated to protecting consumer rights and fighting fraud. Meet our team of legal advocates."
+        url="/attorneys"
+      />
       <Stack.Screen options={{ title: 'Attorneys' }} />
       <View className="flex-1 bg-white dark:bg-slate-900">
         <Navigation />

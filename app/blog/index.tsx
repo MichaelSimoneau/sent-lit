@@ -4,6 +4,7 @@ import { Container } from '../../src/components/Container';
 import { Navigation } from '../../src/components/Navigation';
 import { Footer } from '../../src/components/Footer';
 import { Card } from '../../src/components/Card';
+import { SEOHead } from '../../src/components/SEOHead';
 import { BLOG_POSTS } from '../../src/constants/content';
 
 export default function BlogIndex() {
@@ -19,6 +20,11 @@ export default function BlogIndex() {
 
   return (
     <>
+      <SEOHead 
+        title="Blog & Legal Updates | Sentinel Litigation"
+        description="Stay informed about consumer rights, recent cases, and legal developments from Sentinel Litigation."
+        url="/blog"
+      />
       <Stack.Screen options={{ title: 'Blog' }} />
       <View className="flex-1 bg-white dark:bg-slate-900">
         <Navigation />

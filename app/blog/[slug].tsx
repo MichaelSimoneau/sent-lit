@@ -3,6 +3,7 @@ import { Stack, useLocalSearchParams, Link } from 'expo-router';
 import { Container } from '../../src/components/Container';
 import { Navigation } from '../../src/components/Navigation';
 import { Footer } from '../../src/components/Footer';
+import { SEOHead } from '../../src/components/SEOHead';
 import { BLOG_POSTS } from '../../src/constants/content';
 
 export default function BlogPost() {
@@ -36,6 +37,12 @@ export default function BlogPost() {
 
   return (
     <>
+      <SEOHead 
+        title={`${post.title} | Sentinel Litigation`}
+        description={post.excerpt || post.title}
+        url={`/blog/${post.slug}`}
+        type="article"
+      />
       <Stack.Screen options={{ title: post.title }} />
       <View className="flex-1 bg-white dark:bg-slate-900">
         <Navigation />
