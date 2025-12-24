@@ -113,7 +113,7 @@ export function AISearch() {
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    zIndex: 50,
+    zIndex: 1000,
     width: '100%',
   },
   searchBar: {
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     borderColor: '#e2e8f0',
     padding: 16,
     maxHeight: 384,
-    zIndex: 100,
+    zIndex: 10000,
   },
   resultsHeader: {
     flexDirection: 'row',

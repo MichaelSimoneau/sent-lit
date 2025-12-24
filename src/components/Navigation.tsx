@@ -227,6 +227,8 @@ const styles = StyleSheet.create({
     maxWidth: 400,
     marginHorizontal: 16,
     minWidth: 200,
+    position: 'relative',
+    zIndex: 1000,
   },
   desktopNav: {
     flexDirection: 'row',
