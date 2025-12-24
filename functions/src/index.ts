@@ -10,25 +10,25 @@ const geminiApiKey = defineSecret("GEMINI_API_KEY");
 
 // Initialize Gemini with secret API key
 // Firebase Secrets v2: access via geminiApiKey.value() when deployed
-// For local development, use EXPO_SECRET_GEMINI_API_KEY in functions/.env
+// For local development, use EXPO_SECRET_GEMINI_API_KEY in functions/.env (gitignored)
 const getGeminiApiKey = () => {
-  // Try secret value first (when deployed), then fallback to env var (local dev)
+  // Try secret value first (when deployed)
   try {
     const secretValue = geminiApiKey.value();
     if (secretValue) return secretValue;
   } catch (e) {
     // Secret not available (local dev or not deployed yet)
   }
-  return process.env.EXPO_SECRET_GEMINI_API_KEY || process.env.GEMINI_API_KEY || "";
+  // Fallback to env var for local development only
+  const localKey = process.env.EXPO_SECRET_GEMINI_API_KEY;
+  if (localKey) return localKey;
+  
+  throw new Error("GEMINI_API_KEY not configured. Use Firebase secret in production or EXPO_SECRET_GEMINI_API_KEY in functions/.env for local dev");
 };
 
 // Get Gemini AI instance - must be called inside function handlers to access secrets
 const getGenAI = () => {
   const apiKey = getGeminiApiKey();
-  if (!apiKey) {
-    console.error("GEMINI_API_KEY not found. Available env vars:", Object.keys(process.env).filter(k => k.includes("GEMINI")));
-    throw new Error("GEMINI_API_KEY not configured. Set it via firebase functions:secrets:set GEMINI_API_KEY or EXPO_SECRET_GEMINI_API_KEY env var for local dev");
-  }
   return new GoogleGenerativeAI(apiKey);
 };
 
@@ -83,7 +83,7 @@ export const assessCase = onCall(
     region: "us-central1",
   },
   async (request) => {
-    const { description } = request.data;
+    const { description, systemPrompt } = request.data;
     
     if (!description || typeof description !== "string" || description.length < 10) {
       throw new HttpsError("invalid-argument", "Description must be at least 10 characters");
@@ -97,8 +97,12 @@ export const assessCase = onCall(
       safetySettings: AI_CONFIG.safetySettings,
     });
     
+    // Use custom system prompt if provided, otherwise use default
+    const defaultSystemPrompt = "Act as a senior consumer protection attorney.";
+    const attorneyRole = systemPrompt || defaultSystemPrompt;
+    
     const prompt = `
-      Act as a senior consumer protection attorney. Analyze the following potential case description:
+      ${attorneyRole} Analyze the following potential case description:
       "${description}"
       
       Provide a structured assessment in JSON format with the following fields:

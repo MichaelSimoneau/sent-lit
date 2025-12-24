@@ -4,17 +4,35 @@ import { AIService } from '../services/ai/gemini';
 import { AIAssessment } from '../types/content';
 import { HERO_CONTENT } from '../constants/content';
 
-export function AICaseAssessment() {
-  const [description, setDescription] = useState('');
+interface AICaseAssessmentProps {
+  title?: string;
+  description?: string;
+  systemPrompt?: string;
+  disclaimer?: string;
+  buttonText?: string;
+  placeholder?: string;
+  showDisclaimerAboveResults?: boolean;
+}
+
+export function AICaseAssessment({
+  title = "Do You Have a Case?",
+  description = "Get a preliminary AI assessment in under 2 minutes. Confidential & Free.",
+  systemPrompt,
+  disclaimer = "AI assessment does not constitute legal advice.",
+  buttonText = HERO_CONTENT.ctaPrimary,
+  placeholder = "Describe your situation... (e.g., 'I bought a car and the dealer lied about the accident history')",
+  showDisclaimerAboveResults = false,
+}: AICaseAssessmentProps) {
+  const [inputDescription, setInputDescription] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AIAssessment | null>(null);
 
   const handleAssessment = async () => {
-    if (description.length < 10) return;
+    if (inputDescription.length < 10) return;
     
     setLoading(true);
     try {
-      const assessment = await AIService.assessCase(description);
+      const assessment = await AIService.assessCase(inputDescription, systemPrompt);
       setResult(assessment);
     } catch (error) {
       console.error(error);
@@ -68,6 +86,12 @@ export function AICaseAssessment() {
         >
           <Text style={styles.startOverText}>Start Over</Text>
         </TouchableOpacity>
+        
+        {showDisclaimerAboveResults && (
+          <Text style={styles.disclaimerResult}>
+            {disclaimer}
+          </Text>
+        )}
       </View>
     );
   }
@@ -80,22 +104,22 @@ export function AICaseAssessment() {
           <Text style={styles.badgeText}>AI-Powered Analysis</Text>
         </View>
         <Text style={styles.title}>
-          Do You Have a Case?
+          {title}
         </Text>
         <Text style={styles.description}>
-          Get a preliminary AI assessment in under 2 minutes. Confidential & Free.
+          {description}
         </Text>
       </View>
 
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.textInput}
-          placeholder="Describe your situation... (e.g., 'I bought a car and the dealer lied about the accident history')"
+          placeholder={placeholder}
           placeholderTextColor="#94a3b8"
           multiline
           textAlignVertical="top"
-          value={description}
-          onChangeText={setDescription}
+          value={inputDescription}
+          onChangeText={setInputDescription}
         />
       </View>
 
@@ -108,12 +132,12 @@ export function AICaseAssessment() {
           <ActivityIndicator color="white" style={styles.loader} />
         ) : null}
         <Text style={styles.buttonText}>
-          {loading ? 'Analyzing...' : HERO_CONTENT.ctaPrimary}
+          {loading ? 'Analyzing...' : buttonText}
         </Text>
       </TouchableOpacity>
       
       <Text style={styles.disclaimer}>
-        AI assessment does not constitute legal advice.
+        {disclaimer}
       </Text>
     </View>
   );
@@ -219,6 +243,16 @@ const styles = StyleSheet.create({
     color: '#94a3b8',
     fontSize: 12,
     marginTop: 16,
+    marginBottom: 8,
+  },
+  disclaimerResult: {
+    textAlign: 'center',
+    color: '#94a3b8',
+    fontSize: 12,
+    marginTop: 24,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#e2e8f0',
   },
   resultContainer: {
     backgroundColor: '#ffffff',

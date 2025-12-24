@@ -5,10 +5,10 @@ export const AIService = {
   /**
    * Assess a case based on user description
    */
-  async assessCase(description: string): Promise<AIAssessment> {
+  async assessCase(description: string, systemPrompt?: string): Promise<AIAssessment> {
     try {
       const assessCaseCallable = getCallable("assessCase");
-      const result = await assessCaseCallable({ description });
+      const result = await assessCaseCallable({ description, systemPrompt });
       return result.data as AIAssessment;
     } catch (error: any) {
       console.error("AI Assessment Error:", error);
