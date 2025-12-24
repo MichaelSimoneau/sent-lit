@@ -1,5 +1,6 @@
 import { View, Text, ScrollView, StyleSheet, Platform, useWindowDimensions } from 'react-native';
 import { Stack } from 'expo-router';
+import { useEffect } from 'react';
 import { Container } from '../../src/components/Container';
 import { Navigation } from '../../src/components/Navigation';
 import { Footer } from '../../src/components/Footer';
@@ -12,6 +13,28 @@ export default function Testimonials() {
   const isMobile = width < 768;
   const isTablet = width >= 768 && width < 1024;
   const isDesktop = width >= 1024;
+
+  // Handle hash navigation to scroll to specific testimonial
+  useEffect(() => {
+    if (Platform.OS === 'web' && typeof window !== 'undefined' && typeof document !== 'undefined') {
+      const hash = window.location.hash;
+      if (hash) {
+        // Extract testimonial slug from hash (e.g., #testimonials/MichaelSimoneau)
+        const match = hash.match(/#testimonials\/(.+)/);
+        if (match) {
+          const slug = match[1];
+          // Scroll to the testimonial after a brief delay to ensure DOM is ready
+          setTimeout(() => {
+            const elementId = `testimonials-${slug}`;
+            const element = document.getElementById(elementId);
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 300);
+        }
+      }
+    }
+  }, []);
 
   const getTestimonialStyle = () => {
     if (isDesktop) {
@@ -49,13 +72,23 @@ export default function Testimonials() {
             </Text>
 
             <View style={styles.testimonialsGrid}>
-              {TESTIMONIALS.map((testimonial) => (
-                <View key={testimonial.id} style={getTestimonialStyle()}>
-                  <View style={styles.testimonialWrapper}>
-                    <TestimonialCard testimonial={testimonial} />
+              {TESTIMONIALS.map((testimonial) => {
+                const authorSlug = testimonial.author.toLowerCase().replace(/\s+/g, '');
+                return (
+                  <View 
+                    key={testimonial.id} 
+                    style={getTestimonialStyle()}
+                    {...(Platform.OS === 'web' ? { 
+                      // @ts-ignore - web-specific prop for anchor navigation
+                      id: `testimonials-${authorSlug}` 
+                    } : {})}
+                  >
+                    <View style={styles.testimonialWrapper}>
+                      <TestimonialCard testimonial={testimonial} />
+                    </View>
                   </View>
-                </View>
-              ))}
+                );
+              })}
             </View>
 
             <View style={styles.ctaSection}>
