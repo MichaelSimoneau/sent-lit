@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, useWindowDimensions, StyleSheet, Platform } from 'react-native';
-import { Stack, Link, useRouter } from 'expo-router';
+import { Stack, Link } from 'expo-router';
 import { Navigation } from '../src/components/Navigation';
 import { Footer } from '../src/components/Footer';
 import { Container } from '../src/components/Container';
@@ -16,7 +16,6 @@ import { SEOHead } from '../src/components/SEOHead';
 import { Mosaic } from '../src/components/Mosaic';
 
 export default function Home() {
-  const router = useRouter();
   const { width } = useWindowDimensions();
   
   // Check if we're on sentlit.com and should redirect to Sent Lit page
@@ -27,11 +26,12 @@ export default function Home() {
       const isSentLitDomain = hostname === 'sentlit.com' || hostname === 'www.sentlit.com';
       
       // Only redirect if we're on the root path and on sentlit.com
+      // Use window.location for a full page redirect to avoid router mount issues
       if (isSentLitDomain && (pathname === '/' || pathname === '')) {
-        router.replace('/sent-lit');
+        window.location.href = '/sent-lit';
       }
     }
-  }, [router]);
+  }, []);
   const isMobile = width < 768;
   const isTablet = width >= 768 && width < 1024;
   const isDesktop = width >= 1024;

@@ -26,16 +26,20 @@ export function AICaseAssessment({
   const [inputDescription, setInputDescription] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AIAssessment | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleAssessment = async () => {
     if (inputDescription.length < 10) return;
     
     setLoading(true);
+    setError(null);
     try {
       const assessment = await AIService.assessCase(inputDescription, systemPrompt);
       setResult(assessment);
-    } catch (error) {
-      console.error(error);
+      setInputDescription(''); // Clear input on success
+    } catch (error: any) {
+      console.error('AI Assessment Error:', error);
+      setError(error.message || 'Failed to assess case. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -82,7 +86,11 @@ export function AICaseAssessment({
         
         <TouchableOpacity 
           style={styles.startOverButton}
-          onPress={() => setResult(null)}
+          onPress={() => {
+            setResult(null);
+            setError(null);
+            setInputDescription('');
+          }}
         >
           <Text style={styles.startOverText}>Start Over</Text>
         </TouchableOpacity>
@@ -119,9 +127,18 @@ export function AICaseAssessment({
           multiline
           textAlignVertical="top"
           value={inputDescription}
-          onChangeText={setInputDescription}
+          onChangeText={(text) => {
+            setInputDescription(text);
+            if (error) setError(null); // Clear error when user starts typing
+          }}
         />
       </View>
+
+      {error && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      )}
 
       <TouchableOpacity 
         style={[styles.button, loading && styles.buttonDisabled]}
@@ -237,6 +254,19 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  errorContainer: {
+    backgroundColor: '#fef2f2',
+    borderWidth: 1,
+    borderColor: '#fecaca',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+  },
+  errorText: {
+    color: '#dc2626',
+    fontSize: 14,
+    textAlign: 'center',
   },
   disclaimer: {
     textAlign: 'center',

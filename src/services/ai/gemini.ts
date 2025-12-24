@@ -12,7 +12,9 @@ export const AIService = {
       return result.data as AIAssessment;
     } catch (error: any) {
       console.error("AI Assessment Error:", error);
-      throw new Error(error.message || "Failed to assess case. Please try again.");
+      // Extract error message from Firebase callable error structure
+      const errorMessage = error?.message || error?.code || "Failed to assess case. Please try again.";
+      throw new Error(errorMessage);
     }
   },
 

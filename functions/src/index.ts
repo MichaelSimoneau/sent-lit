@@ -6,7 +6,7 @@ import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/ge
 admin.initializeApp();
 
 // Define the secret for Firebase Functions v2
-const geminiApiKey = defineSecret("GEMINI_API_KEY");
+const geminiApiKey = defineSecret("EXPO_PUBLIC_FIREBASE_GEMINI_API_KEY");
 
 // Initialize Gemini with secret API key
 // Firebase Secrets v2: access via geminiApiKey.value() when deployed
@@ -23,7 +23,7 @@ const getGeminiApiKey = () => {
   const localKey = process.env.EXPO_SECRET_GEMINI_API_KEY;
   if (localKey) return localKey;
   
-  throw new Error("GEMINI_API_KEY not configured. Use Firebase secret in production or EXPO_SECRET_GEMINI_API_KEY in functions/.env for local dev");
+  throw new Error("EXPO_PUBLIC_FIREBASE_GEMINI_API_KEY not configured. Use Firebase secret in production or EXPO_SECRET_GEMINI_API_KEY in functions/.env for local dev");
 };
 
 // Get Gemini AI instance - must be called inside function handlers to access secrets
