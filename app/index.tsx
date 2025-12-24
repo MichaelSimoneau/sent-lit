@@ -208,8 +208,8 @@ export default function Home() {
                   styles.bodyText,
                   isTablet && styles.bodyTextTablet
                 ]}>
-                    Founded by David Rodriguez, Sentinel Litigation stands apart in a crowded field. While competition handles broad legal matters, 
-                    we specialize laser-focused on consumer fraud. David Rodriguez brings extensive experience and dedication to protecting consumers from corporate abuse.
+                    Founded by David Rodriguez, a professor at DePaul University College of Law in Chicago, Sentinel Litigation stands apart in a crowded field. While competition handles broad legal matters, 
+                    we specialize laser-focused on consumer fraud. David Rodriguez brings a unique combination of academic expertise and practical experience, combining his role as a law professor with hands-on dedication to protecting consumers from corporate abuse.
                   </Text>
                   <Text style={[
                     styles.bodyText,
