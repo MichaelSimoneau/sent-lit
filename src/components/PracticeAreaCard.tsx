@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 4,
     borderTopColor: 'transparent',
     backgroundColor: '#0f172a', // slate-900 - dark background for white text
+    borderWidth: 1,
+    borderColor: '#334155', // slate-700 - dark border for dark background
   },
   iconContainer: {
     width: 48,

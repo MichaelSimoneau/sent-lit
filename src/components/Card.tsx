@@ -7,12 +7,28 @@ interface CardProps extends ViewProps {
 }
 
 export function Card({ children, className, hoverEffect = false, style, ...props }: CardProps) {
-  // Use explicit stylesheet as fallback/primary with tailwind as overlay
+  // Check if backgroundColor is explicitly set in style prop
+  // Handle both object and array styles
+  let hasCustomBackground = false;
+  if (style) {
+    if (Array.isArray(style)) {
+      hasCustomBackground = style.some((s: any) => s && s.backgroundColor);
+    } else {
+      hasCustomBackground = !!(style as any).backgroundColor;
+    }
+  }
+  
+  // Remove bg-white from className if custom background is provided
+  // Also adjust border color for dark backgrounds
+  const baseClassName = hasCustomBackground 
+    ? "rounded-xl shadow-md p-6 group"  // Remove border classes - let style prop handle it
+    : "bg-white dark:bg-slate-800 rounded-xl shadow-md border border-slate-200 dark:border-slate-700 p-6 group";
+  
   return (
     <View 
       style={[styles.card, style]}
       className={twMerge(
-        "bg-white dark:bg-slate-800 rounded-xl shadow-md border border-slate-200 dark:border-slate-700 p-6 group",
+        baseClassName,
         // Hover state simulation for web - made more prominent
         Platform.OS === 'web' && "transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/30",
         className
@@ -26,7 +42,7 @@ export function Card({ children, className, hoverEffect = false, style, ...props
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: 'white',
+    // backgroundColor removed - let style prop or className handle it
     borderRadius: 12,
     padding: 24,
     shadowColor: '#000',

@@ -15,7 +15,7 @@ export function AttorneyCard({ attorney }: AttorneyCardProps) {
           {attorney.name.split(' ').map(n => n[0]).join('')}
         </Text>
       </View>
-      <Text className="text-xl font-bold text-primary dark:text-white mb-1">
+      <Text className="text-xl font-bold text-slate-900 dark:text-white mb-1">
         {attorney.name}
       </Text>
       <Text className="text-slate-600 dark:text-slate-300 mb-4">
